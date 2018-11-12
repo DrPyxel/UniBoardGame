@@ -22,7 +22,7 @@
 </head>
 <body>
         <script>
-            var player;
+        var player;
         var student;
         var cursors;
         var beesles;
@@ -104,9 +104,16 @@
         var scene;
         var points;
         var squareOn;
+        var score = 0;
         var scoreText;
         var timer;
         var artifact;
+        var squareOn;
+        var tacoShell;
+        var tacoBeef;
+        var tacoCheese;
+        var tacoLettuce;
+        var tacoSauce;
 var Game = new Phaser.Class({
 
             Extends: Phaser.Scene,
@@ -120,7 +127,7 @@ var Game = new Phaser.Class({
             preload: function ()
             {
             this.load.image('board', 'sprites/board.png');
-            this.load.spritesheet('student', 'sprites/student.png', {frameWidth: 136 / 4, frameHeight: 160 / 4});
+            this.load.spritesheet('student', 'sprites/student.png', {frameWidth: 28, frameHeight: 33});
             this.load.image('beesley', 'sprites/Beesley.png');
             this.load.image('player', 'sprites/player.png');
             this.load.image('center', 'sprites/boardCenter.png');
@@ -165,13 +172,14 @@ var Game = new Phaser.Class({
             },
             create: function ()
             {
+            
             studentX = 750;
             studentY = 50;
             
             this.add.image(400, 400, 'board');
             beesles = this.physics.add.staticGroup();
             center = this.physics.add.staticGroup();
-            
+            squareOn = 1;
             center.create(400, 400, 'center');
             //beesles.create(400, 400, 'beesley');
             square1 = this.physics.add.group();
@@ -275,7 +283,6 @@ var Game = new Phaser.Class({
             square32.create(760, 40, 'square-32');
 
             
-
             student = this.physics.add.sprite(studentX, studentY, 'student');
             student.setCollideWorldBounds(true);
 
@@ -294,6 +301,7 @@ var Game = new Phaser.Class({
                             dienumber = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
                             
                             stepsLeft = dienumber + 1;
+                            squareOn--;
                             reset();
                             center.create(400, 400, 'center');
                             if (dienumber === 1)
@@ -348,15 +356,26 @@ var Game = new Phaser.Class({
             
 
             this.anims.create({
-                key: 'turn',
+                key: 'move',
                 frames: this.anims.generateFrameNumbers('student', { start: 0, end: 5 }),
                 frameRate: 10,
                 repeat: -1
             });
-
+            this.anims.create({
+                key: 'right',
+                frames: this.anims.generateFrameNumbers('student', { start: 6, end: 13 }),
+                frameRate: 10,
+                repeat: -1
+            });
+            this.anims.create({
+                key: 'left',
+                frames: this.anims.generateFrameNumbers('student', { start: 14, end: 22 }),
+                frameRate: 10,
+                repeat: -1
+            });
             this.anims.create({
                 key: 'none',
-                frames: [ { key: 'student', frame: 4 } ],
+                frames: [ { key: 'student', frame: 0 } ],
                 frameRate: 10
             });
             
@@ -395,7 +414,10 @@ var Game = new Phaser.Class({
             this.physics.add.overlap(student, square30, overSquare30);
             this.physics.add.overlap(student, square31, overSquare31);
             this.physics.add.overlap(student, square32, overSquare32);
-        
+            if(inMinigame === true)
+            {
+                this.scene.launch(history);
+            }
         },
         update: function ()
         {
@@ -405,23 +427,20 @@ var Game = new Phaser.Class({
                 if (cursors.right.isDown && lockDir!== 2)
                 {
                     student.setVelocityX(160);
-                    student.anims.play('turn', true);
+                    student.anims.play('right', true);
                 }
                 else if (cursors.left.isDown && lockDir !== 4)
                 {
                     student.setVelocityX(-160);
 
-                    student.anims.play('turn', true);
+                    student.anims.play('left', true);
                 }
-                else
-                {
-                    student.setVelocityX(0);
-                }
-                if (cursors.up.isDown && lockDir !== 1)
+                
+                else if (cursors.up.isDown && lockDir !== 1)
                 {
                     student.setVelocityY(-160);
 
-                    student.anims.play('turn', true);
+                    student.anims.play('move', true);
                 }
                 
                 
@@ -429,12 +448,12 @@ var Game = new Phaser.Class({
                 {
                     student.setVelocityY(160);
 
-                    student.anims.play('turn', true);
+                    student.anims.play('move', true);
                 }
                 else
                 {
                     student.setVelocityY(0);
-
+                    student.setVelocityX(0);
                     student.anims.play('none', true);
                 }
             }
@@ -444,6 +463,8 @@ var Game = new Phaser.Class({
                 student.setVelocityX(0);
                 student.setVelocityY(0);
                 student.anims.play('none', true);
+                activateMinigame();
+                printAll();
             }
         }
         });
@@ -464,7 +485,7 @@ var HistoryGame = new Phaser.Class({
     },
     create: function ()
     {
-        artifact = false;
+        
         this.cameras.main.setBounds(0, 0, 1600, 1600);
         this.physics.world.setBounds(0, 0, 1600, 1600);
         student = this.physics.add.sprite(1500, 1500, 'student');
@@ -501,10 +522,9 @@ var HistoryGame = new Phaser.Class({
             });*/
             //this.physics.add.collider(student, square); 
             this.physics.add.overlap(student, square, artifactFound);
-            if (artifact === true)
+            if (artifact === 1)
             {
-                this.scene.launch('SceneB');
-                //console.log('collision');
+                this.scene.start('game');
             }
             
 
@@ -549,6 +569,106 @@ var HistoryGame = new Phaser.Class({
 
 })
         
+var SpanishGame = new Phaser.Class({
+    Extends: Phaser.Scene,
+    initialize:
+
+    function SpanishGame ()
+    {
+        Phaser.Scene.call(this, 'spanish');
+    },
+    preload: function()
+    {
+        this.load.image('plate', 'sprites/boardCenter.png');
+        this.load.image('beef', 'sprites/TacoBeef.png');
+        this.load.image('cheese', 'sprites/TacoCheese.png');
+        this.load.image('lettuce', 'sprites/TacoLettuce.png');
+        this.load.image('sauce', 'sprites/TacoSauce.png');
+        this.load.image('shell', 'sprites/TacoShell.png');
+    },
+    create: function()
+    {
+        
+        tacoPlate = this.physics.add.group();
+        //tacoBeef = this.physics.add.group();
+        //tacoCheese = this.physics.add.group();
+        //tacoLettuce = this.physics.add.group();
+        //tacoSauce = this.physics.add.group();
+        tacoShell = this.physics.add.group();
+
+        cursors = this.input.keyboard.createCursorKeys();
+        tacoPlate.create(400, 400, 'plate');
+
+        tacoShell = this.physics.add.sprite(400, 600, 'shell');
+        tacoShell.setCollideWorldBounds(true);
+
+        tacoBeef = this.physics.add.group({
+        key: 'beef',
+        repeat: 50,
+        setXY: { x: 15, y: 20, stepX: 15}
+        });
+
+        tacoCheese = this.physics.add.group({
+        key: 'cheese',
+        repeat: 9,
+        setXY: { x: 16, y: 20, stepX: 100}
+        });
+
+        tacoLettuce = this.physics.add.group({
+        key: 'lettuce',
+        repeat: 17,
+        setXY: { x: 12, y: 20, stepX: 50}
+        });
+
+        tacoSauce = this.physics.add.group({
+        key: 'sauce',
+        repeat: 1,
+        setXY: { x: 400, y: 20, stepX: 200}
+        });
+
+        this.physics.add.collider(tacoShell, tacoBeef, hitBeef, null, this);
+        this.physics.add.collider(tacoShell, tacoCheese, hitCheese, null, this);
+        this.physics.add.collider(tacoShell, tacoLettuce, hitLettuce, null, this);
+        this.physics.add.collider(tacoShell, tacoSauce, hitSauce, null, this);
+        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fff' });
+        
+
+    },
+    update: function()
+    {
+        tacoBeef.setVelocityY(160);
+        tacoCheese.setVelocityY(180);
+        tacoLettuce.setVelocityY(160);
+        tacoSauce.setVelocityY(100);
+        if (cursors.right.isDown)
+        {
+            tacoShell.setVelocityX(200);
+        }
+        else if (cursors.left.isDown)
+        {
+            tacoShell.setVelocityX(-200);
+        }
+        else
+        {
+            tacoShell.setVelocityX(0);
+        }
+        if (cursors.up.isDown)
+                {
+                    tacoShell.setVelocityY(-100);
+                }
+                
+                
+                else if (cursors.down.isDown)
+                {
+                    tacoShell.setVelocityY(100);
+
+                }
+                else
+                {
+                    tacoShell.setVelocityY(0);
+                }
+    }
+})
         var config = {
         type: Phaser.AUTO,
         width: 800,
@@ -559,10 +679,10 @@ var HistoryGame = new Phaser.Class({
             default: 'arcade',
             arcade: {
                 gravity: { y: 0 },
-                debug: true
+                debug: false
             }
         },
-        scene: [HistoryGame, Game]
+        scene: [SpanishGame, Game, HistoryGame]
         };
 
         var game = new Phaser.Game(config);
@@ -579,6 +699,7 @@ var HistoryGame = new Phaser.Class({
             timer = 0;
             scene = 0;
             points = 0;
+            
         }
 
         function update ()
@@ -593,6 +714,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square1Counted = true;
                 lockDir = 1;
+                squareOn++;
 
             }
         }
@@ -603,6 +725,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square2Counted = true;
                 lockDir = 1;
+                squareOn++;
             }
         }
         function overSquare3 ()
@@ -612,6 +735,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square3Counted = true;
                 lockDir = 1;
+                squareOn++;
             }
         }
         function overSquare4 ()
@@ -622,6 +746,7 @@ var HistoryGame = new Phaser.Class({
                 square4Counted = true;
                 
                 lockDir = 1;
+                squareOn++;
                 
             }
         }
@@ -632,6 +757,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square5Counted = true;
                 lockDir = 1;
+                squareOn++;
             }
         }
         function overSquare6 ()
@@ -641,6 +767,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square6Counted = true;
                 lockDir = 1;
+                squareOn++;
             }
         }
         function overSquare7 ()
@@ -650,6 +777,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square7Counted = true;
                 lockDir = 1;
+                squareOn++;
             }
         }
         function overSquare8 ()
@@ -659,6 +787,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square8Counted = true;
                 lockDir = 1;
+                squareOn++;
             }
         }
         function overSquare9 ()
@@ -668,6 +797,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square9Counted = true;
                 lockDir = 2;
+                squareOn++;
             }
         }
         function overSquare10 ()
@@ -677,6 +807,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square10Counted = true;
                 lockDir = 2;
+                squareOn++;
             }
         }
         function overSquare11 ()
@@ -686,6 +817,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square11Counted = true;
                 lockDir = 2;
+                squareOn++;
             }
         }
         function overSquare12 ()
@@ -695,6 +827,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square12Counted = true;
                 lockDir = 2;
+                squareOn++;
             }
         }
         function overSquare13 ()
@@ -704,6 +837,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square13Counted = true;
                 lockDir = 2;
+                squareOn++;
             }
         }
         function overSquare14 ()
@@ -713,6 +847,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square14Counted = true;
                 lockDir = 2;
+                squareOn++;
             }
         }
         function overSquare15 ()
@@ -722,6 +857,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square15Counted = true;
                 lockDir = 2;
+                squareOn++;
             }
         }
         function overSquare16 ()
@@ -731,6 +867,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square16Counted = true;
                 lockDir = 2;
+                squareOn++;
             }
         }
         function overSquare17 ()
@@ -740,6 +877,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square17Counted = true;
                 lockDir = 3;
+                squareOn++;
 
             }
         }
@@ -750,6 +888,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square18Counted = true;
                 lockDir = 3;
+                squareOn++;
             }
         }
         function overSquare19 ()
@@ -759,6 +898,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square19Counted = true;
                 lockDir = 3;
+                squareOn++;
             }
         }
         function overSquare20 ()
@@ -777,6 +917,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square21Counted = true;
                 lockDir = 3;
+                squareOn++;
             }
         }
         function overSquare22 ()
@@ -786,6 +927,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square22Counted = true;
                 lockDir = 3;
+                squareOn++;
             }
         }
         function overSquare23 ()
@@ -795,6 +937,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square23Counted = true;
                 lockDir = 3;
+                squareOn++;
             }
         }
         function overSquare24 ()
@@ -804,6 +947,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square24Counted = true;
                 lockDir = 3;
+                squareOn++;
             }
         }
         function overSquare25 ()
@@ -813,6 +957,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square25Counted = true;
                 lockDir = 4;
+                squareOn++;
             }
         }
         function overSquare26 ()
@@ -822,6 +967,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square26Counted = true;
                 lockDir = 4;
+                squareOn++;
             }
         }
         function overSquare27 ()
@@ -831,6 +977,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square27Counted = true;
                 lockDir = 4;
+                squareOn++;
             }
         }
         function overSquare28 ()
@@ -840,6 +987,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square28Counted = true;
                 lockDir = 4;
+                squareOn++;
             }
         }
         function overSquare29 ()
@@ -849,6 +997,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square29Counted = true;
                 lockDir = 4;
+                squareOn++;
             }
         }
         function overSquare30 ()
@@ -858,6 +1007,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square30Counted = true;
                 lockDir = 4;
+                squareOn++;
             }
             
         }
@@ -868,6 +1018,7 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square31Counted = true;
                 lockDir = 4;
+                squareOn++;
             }
         }
         function overSquare32 ()
@@ -877,16 +1028,50 @@ var HistoryGame = new Phaser.Class({
                 stepsLeft--;
                 square32Counted = true;
                 lockDir = 4;
+                squareOn++;
             }
+        }
+        function activateMinigame ()
+        {
+            if (squareOn % 8 === 2)
+            {
+                inMinigame = 2;
+            }
+            //else if (squareOn %)
         }
         function artifactFound ()
         {
             console.log('hello');
-            artifact = true;
+            artifact = 1;
             console.log(artifact);
             //this.scene.launch('game');    
             //this.scene.start('game');
                 
+        }
+
+        function hitBeef (tacoShell, tacoBeef)
+        {
+        tacoBeef.disableBody(true, true);
+        score += 2;
+        scoreText.setText('Score: ' + score);
+        }
+        function hitCheese (tacoShell, tacoCheese)
+        {
+        tacoCheese.disableBody(true, true);
+        score += 5;
+        scoreText.setText('Score: ' + score);
+        }
+        function hitLettuce (tacoShell, tacoLettuce)
+        {
+        tacoLettuce.disableBody(true, true);
+        score += 7;
+        scoreText.setText('Score: ' + score);
+        }
+        function hitSauce (tacoShell, tacoSauce)
+        {
+        tacoSauce.disableBody(true, true);
+        score -= 20;
+        scoreText.setText('Score: ' + score);
         }
     }
         function reset()
@@ -929,7 +1114,10 @@ var HistoryGame = new Phaser.Class({
         {
             timer++;
         }
-
+        function printAll()
+        {
+            console.log(squareOn);
+        }
         
         </script>
 </body>
