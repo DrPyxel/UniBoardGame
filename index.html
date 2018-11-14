@@ -122,6 +122,8 @@
         var DBlMove;
         var DBuMove;
         var DBdMove;
+        var DBrShoot;
+        var DBlShoot;
 var Game = new Phaser.Class({
 
             Extends: Phaser.Scene,
@@ -720,7 +722,9 @@ var GymGame = new Phaser.Class({
         DBred = this.physics.add.sprite(400, 500, 'red');
         DBblue = this.physics.add.sprite(400, 300, 'blue');
         
-
+        DBball.setCollideWorldBounds(true);
+        DBblue.setCollideWorldBounds(true);
+        DBred.setCollideWorldBounds(true);
         this.physics.add.collider(DBred, DBblue);
         this.physics.add.collider(DBred, DBball);
         this.physics.add.collider(DBblue, DBball);
@@ -735,6 +739,8 @@ var GymGame = new Phaser.Class({
         DBdMove = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         DBrMove = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         DBlMove = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        DBrShoot = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+        DBlShoot = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M); 
         this.anims.create({
                 key: 'AdMove',
                 frames: this.anims.generateFrameNumbers('redAd', { start: 0, end: 12 }),
