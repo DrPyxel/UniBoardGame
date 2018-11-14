@@ -693,6 +693,11 @@ var GymGame = new Phaser.Class({
         this.load.image('ball', 'sprites/ball.png');
         this.load.image('red', 'sprites/playerRed.png');
         this.load.image('blue', 'sprites/playerBlue.png');
+        this.load.spritesheet('redAd', 'sprites/RedAd.png', {frameWidth: 256, frameHeight: 48});
+        this.load.image('blueAd', 'sprites/BlueAd.png');
+        this.load.image('benchR', 'sprites/BenchR.png');
+        this.load.image('benchL', 'sprites/BenchL.png');
+        this.load.image('halfCourt', 'sprites/Center.png')
     },
     create: function()
     {
@@ -700,16 +705,43 @@ var GymGame = new Phaser.Class({
         DBred = this.physics.add.group();
         DBblue = this.physics.add.group();
         this.add.image(400, 400, 'court');
+        var redAd = this.physics.add.staticGroup();
+        var blueAd = this.physics.add.staticGroup();
+        var benchR = this.physics.add.staticGroup();
+        var benchL = this.physics.add.staticGroup();
+        var halfCourt = this.physics.add.staticGroup();
+        redAd.create(400, 150, 'redAd');
+        blueAd.create(400, 650, 'blueAd');
+        halfCourt.create(400, 400, 'halfCourt');
+        benchR.create(700, 400, 'benchR');
+        benchL.create(100, 400, 'benchL');
         
         DBball = this.physics.add.sprite(400, 400, 'ball');
         DBred = this.physics.add.sprite(400, 500, 'red');
         DBblue = this.physics.add.sprite(400, 300, 'blue');
+        
 
+        this.physics.add.collider(DBred, DBblue);
+        this.physics.add.collider(DBred, DBball);
+        this.physics.add.collider(DBblue, DBball);
+        this.physics.add.collider(redAd, DBball);
+        this.physics.add.collider(blueAd, DBball);
+        this.physics.add.collider(DBball, benchR);
+        this.physics.add.collider(DBball, benchL);
+        this.physics.add.collider(DBred, halfCourt);
+        this.physics.add.collider(DBblue, halfCourt);
         cursors = this.input.keyboard.createCursorKeys();
         DBuMove = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         DBdMove = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         DBrMove = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         DBlMove = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.anims.create({
+                key: 'AdMove',
+                frames: this.anims.generateFrameNumbers('redAd', { start: 0, end: 12 }),
+                frameRate: 10,
+                repeat: -1
+        });
+        //this.anims.play('AdMove', true);
     },
     update: function()
     {
