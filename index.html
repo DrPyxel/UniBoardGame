@@ -124,6 +124,8 @@
         var DBdMove;
         var DBrShoot;
         var DBlShoot;
+        var holdBallBlue;
+        var holdBallRed;
 var Game = new Phaser.Class({
 
             Extends: Phaser.Scene,
@@ -705,6 +707,8 @@ var GymGame = new Phaser.Class({
     create: function()
     {
         var sandBag;
+        holdBallBlue = 0;
+        holdBallRed = 0;
         DBball = this.physics.add.group();
         DBred = this.physics.add.group();
         DBblue = this.physics.add.group();
@@ -716,21 +720,39 @@ var GymGame = new Phaser.Class({
         var halfCourt = this.physics.add.staticGroup();
         var outside = this.physics.add.staticGroup();
         redAd.create(400, 100, 'redAd');
+        redAd.create(150, 100, 'redAd');
+        redAd.create(650, 100, 'redAd');
         blueAd.create(400, 700, 'blueAd');
+        blueAd.create(150, 700, 'blueAd');
+        blueAd.create(650, 700, 'blueAd');
         halfCourt.create(400, 400, 'halfCourt');
+        benchR.create(700, 0, 'benchR');
+        benchR.create(700, 200, 'benchR');
         benchR.create(700, 400, 'benchR');
+        benchR.create(700, 600, 'benchR');
+        benchR.create(700, 800, 'benchR');
+        benchL.create(100, 0, 'benchL');
+        benchL.create(100, 200, 'benchL');
         benchL.create(100, 400, 'benchL');
-        
+        benchL.create(100, 600, 'benchL');
+        benchL.create(100, 800, 'benchL');
+        sandBag = this.physics.add.group({
+        key: 'bag',
+        repeat: 1,
+        setXY: { x: 300, y: 300, stepX: 200, stepY: 200}
+        });
         DBball = this.physics.add.sprite(400, 400, 'ball');
         DBred = this.physics.add.sprite(400, 500, 'red');
         DBblue = this.physics.add.sprite(400, 300, 'blue');
-        
+        //sandbag.create(300, 300, 'bag');
+        //sandbag.create(500, 500, 'bag');
         DBball.setCollideWorldBounds(true);
         DBblue.setCollideWorldBounds(true);
         DBred.setCollideWorldBounds(true);
+        
         this.physics.add.collider(DBred, DBblue);
-        this.physics.add.collider(DBred, DBball);
-        this.physics.add.collider(DBblue, DBball);
+        this.physics.add.collider(DBred, DBball, redBallAdd, null, this);
+        this.physics.add.collider(DBblue, DBball, blueBallAdd, null, this);
         this.physics.add.collider(redAd, DBball);
         this.physics.add.collider(blueAd, DBball);
         this.physics.add.collider(DBball, benchR);
@@ -746,15 +768,14 @@ var GymGame = new Phaser.Class({
         DBrShoot = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
         DBlShoot = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M); 
         
-        sandBag = this.physics.add.group({
-        key: 'bag',
-        repeat: 1,
-        setXY: { x: 300, y: 300, stepX: 200, stepY: 200}
-        });
+
         this.physics.add.collider(DBblue, sandBag);
         this.physics.add.collider(DBred, sandBag);     
-        
-        //this.anims.play('AdMove', true);
+        this.physics.add.collider(sandBag, DBball);
+        this.physics.add.collider(sandBag, benchR);
+        this.physics.add.collider(sandBag, benchL);
+        this.physics.add.collider(sandBag, redAd);
+        this.physics.add.collider(sandBag, blueAd);
     },
     update: function()
     {
@@ -806,6 +827,10 @@ var GymGame = new Phaser.Class({
         else
         {
         DBred.setVelocityX(0);
+        }
+        if(holdBallBlue > 0)
+        {
+            
         }
     },
 })
@@ -1189,6 +1214,18 @@ var GymGame = new Phaser.Class({
                 
         }
 
+        function blueBallAdd(DBblue, DBball)
+        {
+            //DBball.disablebody(true, true);
+            holdBallBlue++;
+            console.log(holdBallBlue);
+        }
+        function redBallAdd(DBred, DBball)
+        {
+            //DBball.disablebody(true, true);
+            holdBallRed++;
+            console.log(holdBallBlue);
+        }
         function hitBeef (tacoShell, tacoBeef)
         {
         tacoBeef.disableBody(true, true);
