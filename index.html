@@ -1273,6 +1273,19 @@ var GymGame = new Phaser.Class({
         score -= 20;
         scoreText.setText('Score: ' + score);
         }
+
+var MathGame = new Phaser.Class({
+    Extends: Phaser.Scene,
+    initialize:
+    function MathGame ()
+    {
+        Phaser.Scene.call(this, 'math');
+    },
+    preload: function()
+    {
+        this.load.image('paper', 'sprites/Paper.png');
+      
+    },
     }
         function reset()
         {
