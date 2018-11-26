@@ -101,7 +101,6 @@
         var studentX;
         var studentY;
         var inMinigame;
-        var scene;
         var points;
         var squareOn;
         var score = 0;
@@ -126,14 +125,14 @@
         var DBlShoot;
         var holdBallBlue;
         var holdBallRed;
-var Game = new Phaser.Class({
+var gameBoard = new Phaser.Class({
 
             Extends: Phaser.Scene,
 
             initialize:
             function Game ()
             {
-                Phaser.Scene.call(this, 'game');
+                Phaser.Scene.call(this, 'gameBoard');
             },
 
             preload: function ()
@@ -426,10 +425,8 @@ var Game = new Phaser.Class({
             this.physics.add.overlap(student, square30, overSquare30);
             this.physics.add.overlap(student, square31, overSquare31);
             this.physics.add.overlap(student, square32, overSquare32);
-            if(inMinigame === true)
-            {
-                this.scene.launch(history);
-            }
+            
+            
         },
         update: function ()
         {
@@ -475,7 +472,7 @@ var Game = new Phaser.Class({
                 student.setVelocityX(0);
                 student.setVelocityY(0);
                 student.anims.play('none', true);
-                activateMinigame();
+                
                 printAll();
             }
         }
@@ -534,15 +531,16 @@ var HistoryGame = new Phaser.Class({
             });*/
             //this.physics.add.collider(student, square); 
             this.physics.add.overlap(student, square, artifactFound);
-            if (artifact === 1)
-            {
-                this.scene.start('game');
-            }
+            
             
 
     },
     update: function ()
     {
+        if (artifact == 1)
+            {
+                this.scene.start('game');
+            }
         if (cursors.right.isDown)
                 {
                     student.setVelocityX(160);
@@ -707,8 +705,8 @@ var GymGame = new Phaser.Class({
     create: function()
     {
         var sandBag;
-        holdBallBlue = 0;
-        holdBallRed = 0;
+        holdBallBlue = false;
+        holdBallRed = false;
         DBball = this.physics.add.group();
         DBred = this.physics.add.group();
         DBblue = this.physics.add.group();
@@ -776,9 +774,15 @@ var GymGame = new Phaser.Class({
         this.physics.add.collider(sandBag, benchL);
         this.physics.add.collider(sandBag, redAd);
         this.physics.add.collider(sandBag, blueAd);
+        
     },
     update: function()
     {
+        if(inMinigame == 1)
+        {
+            //game.scene.add('gameBoard', gameBoard);
+            
+        }
         if (DBuMove.isDown)
         {
         DBblue.setVelocityY(-100);
@@ -828,9 +832,11 @@ var GymGame = new Phaser.Class({
         {
         DBred.setVelocityX(0);
         }
-        if(holdBallBlue > 0)
+        if (holdBallBlue == true)
         {
-            
+            inMinigame = 1;
+            console.log('blue hit');
+            this.scene.start('gameBoard');
         }
     },
 })
@@ -847,30 +853,48 @@ var GymGame = new Phaser.Class({
                 debug: true
             }
         },
-        scene: [GymGame, Game, HistoryGame, SpanishGame]
+        scene: [HistoryGame, gameBoard, GymGame, SpanishGame]
         };
 
         var game = new Phaser.Game(config);
         
+        inMinigame = 0;
 
-        function preload ()
+        if(inMinigame == 0)
         {
-            
-            
+            //game.scene.add('gymGame', GymGame);
+            game.scene.start('history');
+        }
+        
+        else if(inMinigame == 2)
+        {
+
+        }
+        else if(inMinigame == 3)
+        {
+
+        }
+        else if(inMinigame == 4)
+        {
+
+        }
+        else if (inMinigame == 5)
+        {
+
+        }
+        else if (inMinigame == 6)
+        {
+
+        }
+        else if (inMinigame == 7)
+        {
+
+        }
+        else if (inMinigame == 8)
+        {
+
         }
 
-        function create ()
-        {
-            timer = 0;
-            scene = 0;
-            points = 0;
-            
-        }
-
-        function update ()
-        {
-            
-        }
         {
         function overSquare1 ()
         {
@@ -880,7 +904,7 @@ var GymGame = new Phaser.Class({
                 square1Counted = true;
                 lockDir = 1;
                 squareOn++;
-
+                scene = 1;
             }
         }
         function overSquare2 ()
@@ -1196,14 +1220,6 @@ var GymGame = new Phaser.Class({
                 squareOn++;
             }
         }
-        function activateMinigame ()
-        {
-            if (squareOn % 8 === 2)
-            {
-                inMinigame = 2;
-            }
-            //else if (squareOn %)
-        }
         function artifactFound ()
         {
             console.log('hello');
@@ -1211,20 +1227,27 @@ var GymGame = new Phaser.Class({
             console.log(artifact);
             //this.scene.launch('game');    
             //this.scene.start('game');
-                
         }
 
         function blueBallAdd(DBblue, DBball)
         {
+            if(holdBallBlue == false)
+            {
             //DBball.disablebody(true, true);
-            holdBallBlue++;
+            holdBallBlue = true;
             console.log(holdBallBlue);
+            }
+            
         }
         function redBallAdd(DBred, DBball)
         {
+            if(holdBallRed == false)
+            {
             //DBball.disablebody(true, true);
-            holdBallRed++;
-            console.log(holdBallBlue);
+            holdBallRed = true;
+            console.log(holdBallRed);
+            }
+            
         }
         function hitBeef (tacoShell, tacoBeef)
         {
@@ -1287,15 +1310,10 @@ var GymGame = new Phaser.Class({
             square32Counted = false;
             lockDir = 0;
         }
-        function countTimer()
-        {
-            timer++;
-        }
         function printAll()
         {
             console.log(squareOn);
         }
-        
         </script>
 </body>
 </html>
