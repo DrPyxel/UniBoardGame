@@ -840,6 +840,81 @@ var GymGame = new Phaser.Class({
         }
     },
 })
+// var MathGame = new Phaser.Class({
+//     Extends: Phaser.Scene,
+//     initialize:
+//     function MathGame ()
+//     {
+//         Phaser.Scene.call(this, 'math');
+//     },
+//     preload: function()
+//     {
+//         this.load.image('paper', 'sprites/Paper.png');
+//         var startTime = new Date().getTime() / 1000;
+
+// var possible_symbols = ['+', '-', '/', '*']
+
+// function returnComplexEqation(){
+//     var randomFirstNumber = Math.floor(Math.random() * 10) +1
+//     var equation = "" + randomFirstNumber
+//     var pairs = Math.ceil(Math.random() * 10)
+
+//     for(var variables=0; variables<pairs; variables=variables +1){
+//         equation += " " + possible_symbols[Math.floor(Math.random() * 4)] + "" + randomFirstNumber
+//     }
+
+//     return equation
+// }
+
+
+
+// function displayQuestion(){
+
+//     var str = returnComplexEqation()
+
+//     document.getElementById("demo").innerHTML = str;
+// }
+
+// function updateProgressBar(score){
+//     var progressBar= document.getElementById("progress").value;
+//     var points=score+parseInt(progressBar);
+//     document.getElementById("progress").value = points;
+// }
+
+
+// function calcScore(){
+
+//     var currentTime = new Date().getTime() / 1000;
+//     var timeDifference = currentTime-startTime;
+//     var score = 100/timeDifference
+//     updateProgressBar(10);
+
+// }
+
+// function startGame() {
+//     document.getElementById("start").outerHTML = "";
+//     displayQuestion();
+// }
+
+// function checkAnswer(){
+
+//     var func = document.getElementById("demo").innerHTML;
+//     var answer = document.getElementById("answer").value;
+//     var right_answer = Math.round(eval(func));
+
+
+//     if (parseInt(answer)==right_answer){
+
+//         calcScore()
+//         document.getElementById("demo").innerHTML = "";
+//         displayQuestion();
+
+//     }
+//     else{
+//         alert (right_answer)
+//     }
+
+// }
         var config = {
         type: Phaser.AUTO,
         width: 800,
@@ -1274,83 +1349,8 @@ var GymGame = new Phaser.Class({
         scoreText.setText('Score: ' + score);
         }
 
-// var MathGame = new Phaser.Class({
-//     Extends: Phaser.Scene,
-//     initialize:
-//     function MathGame ()
-//     {
-//         Phaser.Scene.call(this, 'math');
-//     },
-//     preload: function()
-//     {
-//         this.load.image('paper', 'sprites/Paper.png');
-//         var startTime = new Date().getTime() / 1000;
-
-// var possible_symbols = ['+', '-', '/', '*']
-
-// function returnComplexEqation(){
-//     var randomFirstNumber = Math.floor(Math.random() * 10) +1
-//     var equation = "" + randomFirstNumber
-//     var pairs = Math.ceil(Math.random() * 10)
-
-//     for(var variables=0; variables<pairs; variables=variables +1){
-//         equation += " " + possible_symbols[Math.floor(Math.random() * 4)] + "" + randomFirstNumber
-//     }
-
-//     return equation
-// }
-
-
-
-// function displayQuestion(){
-
-//     var str = returnComplexEqation()
-
-//     document.getElementById("demo").innerHTML = str;
-// }
-
-// function updateProgressBar(score){
-//     var progressBar= document.getElementById("progress").value;
-//     var points=score+parseInt(progressBar);
-//     document.getElementById("progress").value = points;
-// }
-
-
-// function calcScore(){
-
-//     var currentTime = new Date().getTime() / 1000;
-//     var timeDifference = currentTime-startTime;
-//     var score = 100/timeDifference
-//     updateProgressBar(10);
-
-// }
-
-// function startGame() {
-//     document.getElementById("start").outerHTML = "";
-//     displayQuestion();
-// }
-
-// function checkAnswer(){
-
-//     var func = document.getElementById("demo").innerHTML;
-//     var answer = document.getElementById("answer").value;
-//     var right_answer = Math.round(eval(func));
-
-
-//     if (parseInt(answer)==right_answer){
-
-//         calcScore()
-//         document.getElementById("demo").innerHTML = "";
-//         displayQuestion();
-
-//     }
-//     else{
-//         alert (right_answer)
-//     }
-
-// }
-    },
     }
+    
         function reset()
         {
             square1Counted = false;
