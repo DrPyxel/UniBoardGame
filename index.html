@@ -125,6 +125,15 @@
         var DBlShoot;
         var holdBallBlue;
         var holdBallRed;
+        var FrBox;
+        var FrBar;
+        var FrTarget;
+        var FrCenter;
+        var FrPan;
+        var FrCrepe;
+        var FrKeySpace;
+        var FrScore;
+        var FrScoreText;
 var gameBoard = new Phaser.Class({
 
             Extends: Phaser.Scene,
@@ -867,7 +876,8 @@ var FrenchGame = new Phaser.Class({
     },
     create: function()
     {
-    score = 0;
+    var didAnim = 0;
+    FrScore = 0;
     FrBox = this.physics.add.staticGroup();
     FrTarget1 = this.physics.add.staticGroup();
     FrTarget2 = this.physics.add.staticGroup();
@@ -875,7 +885,7 @@ var FrenchGame = new Phaser.Class({
     FrTarget4 = this.physics.add.staticGroup();
     FrTarget5 = this.physics.add.staticGroup();
     FrCenter = this.physics.add.staticGroup();
-    FrCenter.create(400, 300, 'center');
+    FrCenter.create(400, 400, 'center');
     FrTarget1.create(500, 350, 'target1');
     FrTarget2.create(500, 365, 'target2');
     FrTarget3.create(500, 383, 'target3');
@@ -891,93 +901,98 @@ var FrenchGame = new Phaser.Class({
     
     keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-    FrBar = this.physics.add.sprite(500, 270, 'bar');
+    FrBar = this.physics.add.sprite(500, 275, 'bar');
     FrBar.setCollideWorldBounds(true);
     FrBar.allowGravity = true;
     FrBar.setBounce(1);
-    this.physics.add.collider(bar, FrBox);
+    this.physics.add.collider(FrBar, FrBox);
     
-    FrPan = this.physics.add.sprite(200, 300, 'pan');
-    FrPan.setCollideWorldBounds(true);
-    FrPan.allowGravity = false;
+    FrPan = this.physics.add.staticGroup();
+    FrPan.create(200, 300, 'pan');
 
     FrCrepe = this.physics.add.sprite(200, 100, 'crepe');
-    
-    this.physics.add.collider(pan, crepe);
-    scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
-    this.physics.add.overlap(bar, target1, overTarget1);
-    this.physics.add.overlap(bar, target2, overTarget2);
-    this.physics.add.overlap(bar, target3, overTarget3);
-    this.physics.add.overlap(bar, target4, overTarget4);
-    this.physics.add.overlap(bar, target5, overTarget5);
+    FrCrepe.setCollideWorldBounds(true);
+
+    this.physics.add.collider(FrPan, FrCrepe);
+    FrScoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
+    this.physics.add.overlap(FrBar, FrTarget1, overTarget1);
+    this.physics.add.overlap(FrBar, FrTarget2, overTarget2);
+    this.physics.add.overlap(FrBar, FrTarget3, overTarget3);
+    this.physics.add.overlap(FrBar, FrTarget4, overTarget4);
+    this.physics.add.overlap(FrBar, FrTarget5, overTarget5);
     },
     update: function()
     {
         if (keySpace.isDown)
     {
-        console.log('spacebar');
-        bar.setVelocity(0, 0);
-        scoreText.setText('Score: ' + score);
+        //console.log(FrCrepe.velocity.y);
+        FrBar.setVelocity(0, 0);
+        
+        FrScoreText.setText('Score: ' + FrScore);
+    }
+    else
+    {
+        FrCrepe.setVelocityY(1000);
     }
     }
 })
-var MathGame = new Phaser.Class({
-    Extends: Phaser.Scene,
-    initialize:
-    function MathGame ()
-    {
-        Phaser.Scene.call(this, 'math');
-    },
-    preload: function()
-    {
-        this.load.image('paper', 'sprites/Paper.png');
-    },
-       create: function()
-     {
-        var paper= this.physics.add.staticGroup();
-        paper.create(400, 400, 'paper').setScale(3);
-        var startTime = new Date().getTime() / 1000;
-    var possible_symbols = ['+', '-', '/', '*']
-    var randomFirstNumber = Math.floor(Math.random() * 10) +1
-    var equation = "" + randomFirstNumber
-    var pairs = Math.ceil(Math.random() * 10)
+// var MathGame = new Phaser.Class({
+//     Extends: Phaser.Scene,
+//     initialize:
+//     function MathGame ()
+//     {
+//         Phaser.Scene.call(this, 'math');
+//     },
+//     preload: function()
+//     {
+//         this.load.image('paper', 'sprites/Paper.png');
+//     },
+//        create: function()
+//      {
+//         var paper= this.physics.add.staticGroup();
+//         paper.create(400, 400, 'paper').setScale(3);
+//         var startTime = new Date().getTime() / 1000;
+//     var possible_symbols = ['+', '-', '/', '*']
+//     var randomFirstNumber = Math.floor(Math.random() * 10) +1
+//     var equation = "" + randomFirstNumber
+//     var pairs = Math.ceil(Math.random() * 10)
 
-    for(var variables=0; variables<pairs; variables=variables +1){
-        equation += " " + possible_symbols[Math.floor(Math.random() * 4)] + "" + randomFirstNumber
-    }
-    //  display string equation;
-    this.add.text(150, 400, equation).setFontFamily('Trebuchet MS').setFontSize(35).setColor('#008080');
+//     for(var variables=0; variables<pairs; variables=variables +1){
+//         equation += " " + possible_symbols[Math.floor(Math.random() * 4)] + "" + randomFirstNumber
+//     }
+//     //  display string equation;
+//     this.add.text(150, 400, equation).setFontFamily('Trebuchet MS').setFontSize(35).setColor('#008080');
  
 
- var keySpace;
- var keyBackspace;
- var textEntry;
+//  var keySpace;
+//  var keyBackspace;
+//  var textEntry;
 
-    this.add.text(10, 10, 'Enter your name:', { font: '32px Courier', fill: '#ffffff' });
+//     this.add.text(10, 10, 'Enter your name:', { font: '32px Courier', fill: '#ffffff' });
 
-    textEntry = this.add.text(10, 50, '', { font: '32px Courier', fill: '#ffff00' });
+//     textEntry = this.add.text(10, 50, '', { font: '32px Courier', fill: '#ffff00' });
 
-    // keys = this.input.keyboard.addKeys('A,B,C');
+//     // keys = this.input.keyboard.addKeys('A,B,C');
 
-    keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-    keyBackspace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.BACKSPACE);
+//     keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+//     keyBackspace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.BACKSPACE);
 
-    this.input.keyboard.on('keydown', function (event) {
+//     this.input.keyboard.on('keydown', function (event) {
 
-        if (event.keyCode === 8 && textEntry.text.length > 0)
-        {
-            textEntry.text = textEntry.text.substr(0, textEntry.text.length - 1);
-        }
-        else if (event.keyCode === 32 || (event.keyCode >= 48 && event.keyCode < 90))
-        {
-            textEntry.text += event.key;
-        }
+//         if (event.keyCode === 8 && textEntry.text.length > 0)
+//         {
+//             textEntry.text = textEntry.text.substr(0, textEntry.text.length - 1);
+//         }
+//         else if (event.keyCode === 32 || (event.keyCode >= 48 && event.keyCode < 90))
+//         {
+//             textEntry.text += event.key;
+//         }
 
-        console.log(event);
+//         console.log(event);
 
-    });
-}
-})
+//     });
+// }
+// })
 
 // var possible_symbols = ['+', '-', '/', '*']
 
@@ -1062,11 +1077,11 @@ var MathGame = new Phaser.Class({
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: { y: 0 },
+                gravity: { y: 200 },
                 debug: false
             }
         },
-        scene: [MathGame, GymGame, gameBoard, HistoryGame, SpanishGame]
+        scene: [FrenchGame, GymGame, gameBoard, HistoryGame, SpanishGame]
         };
 
         var game = new Phaser.Game(config);
@@ -1498,6 +1513,9 @@ function overTarget1()
     {
     FrScore += 10;
     FrBar.disableBody(true, true);
+    
+    FrCrepe.setVelocity(0, -100 * FrScore);
+    
     }
 }
 function overTarget2()
@@ -1507,6 +1525,7 @@ function overTarget2()
     {
     FrScore += 7;
     FrBar.disableBody(true, true);
+    FrCrepe.setVelocity(0, -50 * FrScore);
     }
 }
 function overTarget3()
@@ -1516,6 +1535,7 @@ function overTarget3()
     {
     FrScore += 3;
     FrBar.disableBody(true, true);
+    FrCrepe.setVelocity(0, -20 * FrScore);
     }
 }
 function overTarget4()
@@ -1524,6 +1544,7 @@ function overTarget4()
     {
     FrScore += 2;
     FrBar.disableBody(true, true);
+    FrCrepe.setVelocity(2*FrScore, -10 * FrScore);
     }
 }
 function overTarget5()
@@ -1533,6 +1554,7 @@ function overTarget5()
     {
     FrScore += 1;
     FrBar.disableBody(true, true);
+    FrCrepe.setVelocity(-50 * FrScore, -100 * FrScore);
     }
 }
 
