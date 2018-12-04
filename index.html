@@ -904,6 +904,7 @@ var FrenchGame = new Phaser.Class({
     FrBar = this.physics.add.sprite(500, 275, 'bar');
     FrBar.setCollideWorldBounds(true);
     FrBar.allowGravity = true;
+    FrBar.setVelocityY(200);
     FrBar.setBounce(1);
     this.physics.add.collider(FrBar, FrBox);
     
@@ -1077,7 +1078,7 @@ var FrenchGame = new Phaser.Class({
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: { y: 200 },
+                gravity: { y: 0 },
                 debug: false
             }
         },
