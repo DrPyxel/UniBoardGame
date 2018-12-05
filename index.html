@@ -930,6 +930,13 @@ var FrenchGame = new Phaser.Class({
         FrBar.setVelocity(0, 0);
         
         FrScoreText.setText('Score: ' + FrScore);
+	    var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > 10000){
+      break;
+    }
+  }
+    this.scene.start('gameBoard');
     }
     else
     {
