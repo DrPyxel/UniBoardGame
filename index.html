@@ -430,6 +430,26 @@ var gameBoard = new Phaser.Class({
         },
         update: function ()
         {
+            if(inMinigame == 'WH')
+            {
+                this.scene.start('history');
+            }
+            if(inMinigame == 'PE')
+            {
+                this.scene.start('gym');
+            }
+            if(inMinigame == 'FR')
+            {
+                this.scene.start('french');
+            }
+            if(inMinigame == 'SP')
+            {
+                this.scene.start('spanish');
+            }
+            if(inMinigame == 'MA')
+            {
+                this.scene.start('math');
+            }
             if(stepsLeft > 0)
             {
             
@@ -1187,58 +1207,30 @@ update: function ()
 
         var game = new Phaser.Game(config);
         
-        inMinigame = 0;
+        inMinigame = 'GB';
 
-        if(inMinigame == 0)
-        {
-            //game.scene.add('gymGame', GymGame);
-            game.scene.start('gym');
-        }
-        
-        else if(inMinigame == 2)
-        {
-
-        }
-        else if(inMinigame == 3)
-        {
-
-        }
-        else if(inMinigame == 4)
-        {
-
-        }
-        else if (inMinigame == 5)
-        {
-
-        }
-        else if (inMinigame == 6)
-        {
-
-        }
-        else if (inMinigame == 7)
-        {
-
-        }
-        else if (inMinigame == 8)
-        {
-
-        }
+         
 
         {
         function overSquare1 ()
         {
-            if (square1Counted === false)
+            if (square1Counted == false)
             {
                 stepsLeft--;
                 square1Counted = true;
                 lockDir = 1;
                 squareOn++;
-                scene = 1;
+                if(stepsLeft == 0)
+                {
+                    artifact = 0;
+                    artifactFound = false;
+                    inMinigame = 'WH';
+                }
             }
         }
         function overSquare2 ()
         {
-            if (square2Counted === false)
+            if (square2Counted == false)
             {
                 stepsLeft--;
                 square2Counted = true;
@@ -1248,7 +1240,7 @@ update: function ()
         }
         function overSquare3 ()
         {
-            if (square3Counted === false)
+            if (square3Counted == false)
             {
                 stepsLeft--;
                 square3Counted = true;
@@ -1258,7 +1250,7 @@ update: function ()
         }
         function overSquare4 ()
         {
-            if (square4Counted === false)
+            if (square4Counted == false)
             {
                 stepsLeft--;
                 square4Counted = true;
@@ -1270,7 +1262,7 @@ update: function ()
         }
         function overSquare5 ()
         {
-            if (square5Counted === false)
+            if (square5Counted == false)
             {
                 stepsLeft--;
                 square5Counted = true;
@@ -1280,7 +1272,7 @@ update: function ()
         }
         function overSquare6 ()
         {
-            if (square6Counted === false)
+            if (square6Counted == false)
             {
                 stepsLeft--;
                 square6Counted = true;
@@ -1290,7 +1282,7 @@ update: function ()
         }
         function overSquare7 ()
         {
-            if (square7Counted === false)
+            if (square7Counted == false)
             {
                 stepsLeft--;
                 square7Counted = true;
@@ -1300,7 +1292,7 @@ update: function ()
         }
         function overSquare8 ()
         {
-            if (square8Counted === false)
+            if (square8Counted == false)
             {
                 stepsLeft--;
                 square8Counted = true;
@@ -1310,7 +1302,7 @@ update: function ()
         }
         function overSquare9 ()
         {
-            if (square9Counted === false)
+            if (square9Counted == false)
             {
                 stepsLeft--;
                 square9Counted = true;
@@ -1320,7 +1312,7 @@ update: function ()
         }
         function overSquare10 ()
         {
-            if (square10Counted === false)
+            if (square10Counted == false)
             {
                 stepsLeft--;
                 square10Counted = true;
@@ -1330,7 +1322,7 @@ update: function ()
         }
         function overSquare11 ()
         {
-            if (square11Counted === false)
+            if (square11Counted == false)
             {
                 stepsLeft--;
                 square11Counted = true;
@@ -1340,7 +1332,7 @@ update: function ()
         }
         function overSquare12 ()
         {
-            if (square12Counted === false)
+            if (square12Counted == false)
             {
                 stepsLeft--;
                 square12Counted = true;
@@ -1350,7 +1342,7 @@ update: function ()
         }
         function overSquare13 ()
         {
-            if (square13Counted === false)
+            if (square13Counted == false)
             {
                 stepsLeft--;
                 square13Counted = true;
@@ -1360,7 +1352,7 @@ update: function ()
         }
         function overSquare14 ()
         {
-            if (square14Counted === false)
+            if (square14Counted == false)
             {
                 stepsLeft--;
                 square14Counted = true;
@@ -1370,7 +1362,7 @@ update: function ()
         }
         function overSquare15 ()
         {
-            if (square15Counted === false)
+            if (square15Counted == false)
             {
                 stepsLeft--;
                 square15Counted = true;
@@ -1380,7 +1372,7 @@ update: function ()
         }
         function overSquare16 ()
         {
-            if (square16Counted === false)
+            if (square16Counted == false)
             {
                 stepsLeft--;
                 square16Counted = true;
@@ -1390,7 +1382,7 @@ update: function ()
         }
         function overSquare17 ()
         {
-            if (square17Counted === false)
+            if (square17Counted == false)
             {
                 stepsLeft--;
                 square17Counted = true;
@@ -1401,7 +1393,7 @@ update: function ()
         }
         function overSquare18 ()
         {
-            if (square18Counted === false)
+            if (square18Counted == false)
             {
                 stepsLeft--;
                 square18Counted = true;
@@ -1411,7 +1403,7 @@ update: function ()
         }
         function overSquare19 ()
         {
-            if (square19Counted === false)
+            if (square19Counted == false)
             {
                 stepsLeft--;
                 square19Counted = true;
@@ -1421,7 +1413,7 @@ update: function ()
         }
         function overSquare20 ()
         {
-            if (square20Counted === false)
+            if (square20Counted == false)
             {
                 stepsLeft--;
                 square20Counted = true;
@@ -1430,7 +1422,7 @@ update: function ()
         }
         function overSquare21 ()
         {
-            if (square21Counted === false)
+            if (square21Counted == false)
             {
                 stepsLeft--;
                 square21Counted = true;
@@ -1440,7 +1432,7 @@ update: function ()
         }
         function overSquare22 ()
         {
-            if (square22Counted === false)
+            if (square22Counted == false)
             {
                 stepsLeft--;
                 square22Counted = true;
@@ -1450,7 +1442,7 @@ update: function ()
         }
         function overSquare23 ()
         {
-            if (square23Counted === false)
+            if (square23Counted == false)
             {
                 stepsLeft--;
                 square23Counted = true;
@@ -1460,7 +1452,7 @@ update: function ()
         }
         function overSquare24 ()
         {
-            if (square24Counted === false)
+            if (square24Counted == false)
             {
                 stepsLeft--;
                 square24Counted = true;
@@ -1470,7 +1462,7 @@ update: function ()
         }
         function overSquare25 ()
         {
-            if (square25Counted === false)
+            if (square25Counted == false)
             {
                 stepsLeft--;
                 square25Counted = true;
@@ -1480,7 +1472,7 @@ update: function ()
         }
         function overSquare26 ()
         {
-            if (square26Counted === false)
+            if (square26Counted == false)
             {
                 stepsLeft--;
                 square26Counted = true;
@@ -1490,7 +1482,7 @@ update: function ()
         }
         function overSquare27 ()
         {
-            if (square27Counted === false)
+            if (square27Counted == false)
             {
                 stepsLeft--;
                 square27Counted = true;
@@ -1500,7 +1492,7 @@ update: function ()
         }
         function overSquare28 ()
         {
-            if (square28Counted === false)
+            if (square28Counted == false)
             {
                 stepsLeft--;
                 square28Counted = true;
@@ -1510,7 +1502,7 @@ update: function ()
         }
         function overSquare29 ()
         {
-            if (square29Counted === false)
+            if (square29Counted == false)
             {
                 stepsLeft--;
                 square29Counted = true;
@@ -1520,7 +1512,7 @@ update: function ()
         }
         function overSquare30 ()
         {
-            if (square30Counted === false)
+            if (square30Counted == false)
             {
                 stepsLeft--;
                 square30Counted = true;
@@ -1531,7 +1523,7 @@ update: function ()
         }
         function overSquare31 ()
         {
-            if (square31Counted === false)
+            if (square31Counted == false)
             {
                 stepsLeft--;
                 square31Counted = true;
@@ -1541,7 +1533,7 @@ update: function ()
         }
         function overSquare32 ()
         {
-            if (square32Counted === false)
+            if (square32Counted == false)
             {
                 stepsLeft--;
                 square32Counted = true;
