@@ -52,9 +52,6 @@ Chorus: Singing Solo (Color: Orange ALL MUSIC RELATED CLASSES ARE ORANGE NO MATT
 The player will be presented with a piece of paper, and on it are several preset music fragments. Depending on the combination at which the music is input, the player gets a certain number of points.
 
 
-UNI Artifacts:
-UNI Artifacts are a bonus. Each one corresponds to each character. The four artifacts are a Prox Card, Bubble Tea, Gargoyle, and a Locker. The Prox Card gives you an extra turn whenever you want (Student 2), the Bubble Tea gives you an extra roll (Student 3), the Gargoyle (Student 1) immediately gives you 10 extra points, and the Locker switch points with another student (Student 4). Please note that you may only use your UNI Artifact once per year. 
-
 Entering the Game:
 The first thing you will do as soon as you get onto the game is choose a character. There are four characters: Student 1, Student 2, Student 3, and Student 4. Each one will have a particular UNI card (see above). Then you will choose a foreign language class and a an elective. Here are some choices that you will have to make:
 
