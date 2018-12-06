@@ -570,7 +570,7 @@ var HistoryGame = new Phaser.Class({
         if (artifact == 1)
             {
                 //gameBoard.scene.bringToTop();
-                this.scene.launch('gameBoard');
+                this.scene.switch('gameBoard');
             }
         if (cursors.right.isDown)
                 {
@@ -948,22 +948,20 @@ var FrenchGame = new Phaser.Class({
     update: function()
     {
         if (keySpace.isDown)
-    {
+        {
         //console.log(FrCrepe.velocity.y);
         FrBar.setVelocity(0, 0);
-        
         FrScoreText.setText('Score: ' + FrScore);
-	    var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > 10000){
-      break;
-    }
-  }
-    this.scene.start('gameBoard');
+        if(FrScore > 0)
+        {
+            
+            this.scene.start('gameBoard');
+        }
+        
     }
     else
     {
-        FrCrepe.setVelocityY(1000);
+        FrCrepe.setVelocityY(100);
     }
     }
 })
@@ -1112,7 +1110,7 @@ var FrenchGame = new Phaser.Class({
                 debug: false
             }
         },
-        scene: [SpanishGame, FrenchGame, GymGame, gameBoard, HistoryGame]
+        scene: [FrenchGame, SpanishGame, GymGame, gameBoard, HistoryGame]
         };
 
         var game = new Phaser.Game(config);
@@ -1460,6 +1458,7 @@ var FrenchGame = new Phaser.Class({
             console.log('hello');
             artifact = 1;
             console.log(artifact);
+            inMinigame = 'GB';
             //this.scene.launch('game');    
             //this.scene.start('game');
         }
