@@ -539,12 +539,10 @@ var HistoryGame = new Phaser.Class({
     {
         if (artifact == 1)
             {
-<<<<<<< HEAD
+
                 //gameBoard.scene.bringToTop();
                 this.scene.switch('gameBoard');
-=======
-                this.scene.start('gameBoard');
->>>>>>> 3ceadbdc124d12632546accac5900bf29817b2b1
+
             }
         if (cursors.right.isDown)
                 {
@@ -921,6 +919,9 @@ var FrenchGame = new Phaser.Class({
     },
     update: function()
     {
+        FrBar.setVelocity(0, 0);
+            
+        FrScoreText.setText('Score: ' + FrScore);
         if (keySpace.isDown)
         {
         //console.log(FrCrepe.velocity.y);
@@ -938,16 +939,9 @@ var FrenchGame = new Phaser.Class({
         FrCrepe.setVelocityY(100);
     }
         
-            FrBar.setVelocity(0, 0);
             
-            FrScoreText.setText('Score: ' + FrScore);
-        }
-   
-        else
-        {
-            FrCrepe.setVelocityY(1000);
-        }
->>>>>>> 3ceadbdc124d12632546accac5900bf29817b2b1
+        
+
     }
 })
    
