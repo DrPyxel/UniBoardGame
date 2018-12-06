@@ -53,7 +53,7 @@ The player will be presented with a piece of paper, and on it are several preset
 
 
 Entering the Game:
-The first thing you will do as soon as you get onto the game is choose a character. There are four characters: Student 1, Student 2, Student 3, and Student 4. Each one will have a particular UNI card (see above). Then you will choose a foreign language class and a an elective. Here are some choices that you will have to make:
+The first thing you will do as soon as you get onto the game is choose a character. There are four characters: Student 1, Student 2, Student 3, and Student 4. Then you will choose a foreign language class and an elective. Here are some choices that you will have to make:
 
 - Choose a character
     Student 1
