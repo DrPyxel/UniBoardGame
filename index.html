@@ -765,8 +765,8 @@ var GymGame = new Phaser.Class({
         setXY: { x: 300, y: 300, stepX: 200, stepY: 200}
         });
         //here we are creating the ball and red an blue characater
-        DBball = this.physics.add.sprite(400, 450, 'ball');
-        DBred = this.physics.add.sprite(400, 500, 'red');
+        DBball = this.physics.add.sprite(400, 550, 'ball');
+        DBred = this.physics.add.sprite(400, 600, 'red');
         DBblue = this.physics.add.sprite(400, 300, 'blue');
         //sandbag.create(300, 300, 'bag');
         //sandbag.create(500, 500, 'bag');
@@ -781,8 +781,6 @@ var GymGame = new Phaser.Class({
         this.physics.add.collider(blueAd, DBball);
         this.physics.add.collider(DBball, benchR);
         this.physics.add.collider(DBball, benchL);
-        this.physics.add.collider(DBred, halfCourt);
-        this.physics.add.collider(DBblue, halfCourt);
         //this.physics.add.collider(DBblue, DBball); useless look at line 755
        
         cursors = this.input.keyboard.createCursorKeys();
@@ -814,11 +812,11 @@ var GymGame = new Phaser.Class({
 
         if (DBuMove.isDown)
         {
-        DBblue.setVelocityY(-100);
+        DBblue.setVelocityY(-115);
         }
         else if (DBdMove.isDown)
         {
-        DBblue.setVelocityY(100);
+        DBblue.setVelocityY(115);
         }
         else
         {
@@ -826,11 +824,11 @@ var GymGame = new Phaser.Class({
         }
         if(DBrMove.isDown)
         {
-        DBblue.setVelocityX(-100);
+        DBblue.setVelocityX(-115);
         }
         else if (DBlMove.isDown)
         {
-        DBblue.setVelocityX(100);
+        DBblue.setVelocityX(115);
         }
         else
         {
