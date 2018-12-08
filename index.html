@@ -125,6 +125,8 @@
         var DBlShoot;
         var holdBallBlue;
         var holdBallRed;
+        var spEnd;
+
 var gameBoard = new Phaser.Class({
 
             Extends: Phaser.Scene,
@@ -137,11 +139,11 @@ var gameBoard = new Phaser.Class({
 
             preload: function ()
             {
-            this.load.image('board', 'sprites/board.png');
+            this.load.image('board', 'sprites/boardNew.png');
             this.load.spritesheet('student', 'sprites/student.png', {frameWidth: 28, frameHeight: 33});
             this.load.image('beesley', 'sprites/Beesley.png');
             this.load.image('player', 'sprites/player.png');
-            this.load.image('center', 'sprites/boardCenter.png');
+            //this.load.image('center', 'sprites/boardCenter.png');
             this.load.image('DieOne', 'sprites/DieOne.png');
             this.load.image('DieTwo', 'sprites/DieTwo.png');
             this.load.image('DieThree', 'sprites/DieThree.png');
@@ -154,32 +156,7 @@ var gameBoard = new Phaser.Class({
             this.load.image('square-4', 'sprites/square-4.png');
             this.load.image('square-5', 'sprites/square-5.png');
             this.load.image('square-6', 'sprites/square-6.png');
-            this.load.image('square-7', 'sprites/square-7.png');
-            this.load.image('square-8', 'sprites/square-8.png');
-            this.load.image('square-9', 'sprites/square-1.png');
-            this.load.image('square-10', 'sprites/square-2.png');
-            this.load.image('square-11', 'sprites/square-3.png');
-            this.load.image('square-12', 'sprites/square-4.png');
-            this.load.image('square-13', 'sprites/square-5.png');
-            this.load.image('square-14', 'sprites/square-6.png');
-            this.load.image('square-15', 'sprites/square-7.png');
-            this.load.image('square-16', 'sprites/square-8.png');
-            this.load.image('square-17', 'sprites/square-1.png');
-            this.load.image('square-18', 'sprites/square-2.png');
-            this.load.image('square-19', 'sprites/square-3.png');
-            this.load.image('square-20', 'sprites/square-4.png');
-            this.load.image('square-21', 'sprites/square-5.png');
-            this.load.image('square-22', 'sprites/square-6.png');
-            this.load.image('square-23', 'sprites/square-7.png');
-            this.load.image('square-24', 'sprites/square-8.png');
-            this.load.image('square-25', 'sprites/square-1.png');
-            this.load.image('square-26', 'sprites/square-2.png');
-            this.load.image('square-27', 'sprites/square-3.png');
-            this.load.image('square-28', 'sprites/square-4.png');
-            this.load.image('square-29', 'sprites/square-5.png');
-            this.load.image('square-30', 'sprites/square-6.png');
-            this.load.image('square-31', 'sprites/square-7.png');
-            this.load.image('square-32', 'sprites/square-8.png');
+            
             },
             create: function ()
             {
@@ -189,9 +166,7 @@ var gameBoard = new Phaser.Class({
             
             this.add.image(400, 400, 'board');
             beesles = this.physics.add.staticGroup();
-            center = this.physics.add.staticGroup();
             squareOn = 1;
-            center.create(400, 400, 'center');
             //beesles.create(400, 400, 'beesley');
             square1 = this.physics.add.group();
             square2 = this.physics.add.group();
@@ -199,32 +174,6 @@ var gameBoard = new Phaser.Class({
             square4 = this.physics.add.group();
             square5 = this.physics.add.group();
             square6 = this.physics.add.group();
-            square7 = this.physics.add.group();
-            square8 = this.physics.add.group();
-            square9 = this.physics.add.group();
-            square10 = this.physics.add.group();
-            square11 = this.physics.add.group();
-            square12 = this.physics.add.group();
-            square13 = this.physics.add.group();
-            square14 = this.physics.add.group();
-            square15 = this.physics.add.group();
-            square16 = this.physics.add.group();
-            square17 = this.physics.add.group();
-            square18 = this.physics.add.group();
-            square19 = this.physics.add.group();
-            square20 = this.physics.add.group();
-            square21 = this.physics.add.group();
-            square22 = this.physics.add.group();
-            square23 = this.physics.add.group();
-            square24 = this.physics.add.group();
-            square25 = this.physics.add.group();
-            square26 = this.physics.add.group();
-            square27 = this.physics.add.group();
-            square28 = this.physics.add.group();
-            square29 = this.physics.add.group();
-            square30 = this.physics.add.group();
-            square31 = this.physics.add.group();
-            square32 = this.physics.add.group();
 
 
             square1Counted = false;
@@ -233,32 +182,6 @@ var gameBoard = new Phaser.Class({
             square4Counted = false;
             square5Counted = false;
             square6Counted = false;
-            square7Counted = false;
-            square8Counted = false;
-            square9Counted = false;
-            square10Counted = false;
-            square11Counted = false;
-            square12Counted = false;
-            square13Counted = false;
-            square14Counted = false;
-            square15Counted = false;
-            square16Counted = false;
-            square17Counted = false;
-            square18Counted = false;
-            square19Counted = false;
-            square20Counted = false;
-            square21Counted = false;
-            square22Counted = false;
-            square23Counted = false;
-            square24Counted = false;
-            square25Counted = false;
-            square26Counted = false;
-            square27Counted = false;
-            square28Counted = false;
-            square29Counted = false;
-            square30Counted = false;
-            square31Counted = false;
-            square32Counted = false;
             
             square1.create(760, 130, 'square-1');
             square2.create(760, 220, 'square-2');
@@ -266,32 +189,6 @@ var gameBoard = new Phaser.Class({
             square4.create(760, 400, 'square-4');
             square5.create(760, 490, 'square-5');
             square6.create(760, 580, 'square-6');
-            square7.create(760, 670, 'square-7');
-            square8.create(760, 760, 'square-8');
-            square9.create(670, 760, 'square-9');
-            square10.create(580, 760, 'square-10');
-            square11.create(490, 760, 'square-11');
-            square12.create(400, 760, 'square-12');
-            square13.create(310, 760, 'square-13');
-            square14.create(220, 760, 'square-14');
-            square15.create(130, 760, 'square-15');
-            square16.create(40, 761, 'square-16');
-            square17.create(40, 670, 'square-17');
-            square18.create(40, 580, 'square-18');
-            square19.create(40, 490, 'square-19');
-            square20.create(40, 400, 'square-20');
-            square21.create(40, 310, 'square-21');
-            square22.create(40, 220, 'square-22');
-            square23.create(40, 130, 'square-23');
-            square24.create(40, 40, 'square-24');
-            square25.create(130, 40, 'square-25');
-            square26.create(220, 40, 'square-26');
-            square27.create(310, 40, 'square-27');
-            square28.create(400, 40, 'square-28');
-            square29.create(490, 40, 'square-29');
-            square30.create(580, 40, 'square-30');
-            square31.create(670, 40, 'square-31');
-            square32.create(760, 39, 'square-32');
 
             
             student = this.physics.add.sprite(studentX, studentY, 'student');
@@ -305,16 +202,11 @@ var gameBoard = new Phaser.Class({
                 if (pointer.rightButtonDown())
                 {
                     console.log(pointer.x + ', ' + pointer.y);
-                    if (pointer.x > 100 && pointer.y > 100)
-                    {
-                        if(pointer.x < 700 && pointer.y < 700)
-                        {
                             dienumber = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
                             
-                            stepsLeft = dienumber + 1;
+                            stepsLeft = dienumber;
                             squareOn--;
                             reset();
-                            center.create(400, 400, 'center');
                             if (dienumber === 1)
                             {
                                 this.add.image(400, 300, 'DieOne');
@@ -341,13 +233,6 @@ var gameBoard = new Phaser.Class({
                             }
                             this.add.text(400, 200, dienumber).setFontFamily('Trebuchet MS').setFontSize(25).setColor('#008080');
                             console.log(dienumber);
-                            
-                            //overSquare1(null, this);
-                            //overSquare2(null, this);
-                            
-                        }
-                    }
-                    
                 }
             
 
@@ -618,10 +503,11 @@ var SpanishGame = new Phaser.Class({
         this.load.image('lettuce', 'sprites/TacoLettuce.png');
         this.load.image('sauce', 'sprites/TacoSauce.png');
         this.load.image('shell', 'sprites/TacoShell.png');
+        this.load.image('end', 'sprites/spanishEnd.png')
     },
     create: function()
     {
-        
+        spEnd = this.physics.add.group();
         tacoPlate = this.physics.add.group();
         //tacoBeef = this.physics.add.group();
         //tacoCheese = this.physics.add.group();
@@ -660,11 +546,12 @@ var SpanishGame = new Phaser.Class({
         repeat: 4-offset,
         setXY: { x: 150, y: offset * -750, stepX: offset * 150, stepY: offset * 250}
         });
-
+        spEnd.create(400, -1250, 'end');
         this.physics.add.collider(tacoShell, tacoBeef, hitBeef, null, this);
         this.physics.add.collider(tacoShell, tacoCheese, hitCheese, null, this);
         this.physics.add.collider(tacoShell, tacoLettuce, hitLettuce, null, this);
         this.physics.add.collider(tacoShell, tacoSauce, hitSauce, null, this);
+        this.physics.add.collider(tacoShell, spEnd, hitEnd, null, this);
         scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fff' });
         
 
@@ -675,6 +562,8 @@ var SpanishGame = new Phaser.Class({
         tacoCheese.setVelocityY(180);
         tacoLettuce.setVelocityY(200);
         tacoSauce.setVelocityY(200);
+        spEnd.setVelocityY(150);
+         
         if (cursors.right.isDown)
         {
             tacoShell.setVelocityX(200);
@@ -1200,7 +1089,7 @@ update: function ()
             }
         },
 
-        scene: [GymGame, MathGame, SpanishGame, FrenchGame, gameBoard, HistoryGame]
+        scene: [gameBoard, MathGame, GymGame, FrenchGame, SpanishGame, HistoryGame]
         };
 
         var game = new Phaser.Game(config);
@@ -1569,6 +1458,10 @@ update: function ()
             console.log(holdBallRed);
             }
             
+        }
+        function hitEnd(tacoShell, spEnd)
+        {
+            this.scene.start('gameBoard');
         }
         function hitBeef (tacoShell, tacoBeef)
         {
