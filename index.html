@@ -202,6 +202,7 @@ var gameBoard = new Phaser.Class({
                 if (pointer.rightButtonDown())
                 {
                     console.log(pointer.x + ', ' + pointer.y);
+                    
                             dienumber = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
                             
                             stepsLeft = dienumber;
@@ -233,6 +234,7 @@ var gameBoard = new Phaser.Class({
                             }
                             this.add.text(400, 200, dienumber).setFontFamily('Trebuchet MS').setFontSize(25).setColor('#008080');
                             console.log(dienumber);
+                            console.log(stepsLeft);
                 }
             
 
@@ -284,33 +286,6 @@ var gameBoard = new Phaser.Class({
             this.physics.add.overlap(student, square4, overSquare4);
             this.physics.add.overlap(student, square5, overSquare5);
             this.physics.add.overlap(student, square6, overSquare6);
-            this.physics.add.overlap(student, square7, overSquare7);
-            this.physics.add.overlap(student, square8, overSquare8);
-            this.physics.add.overlap(student, square9, overSquare9);
-            this.physics.add.overlap(student, square10, overSquare10);
-            this.physics.add.overlap(student, square11, overSquare11);
-            this.physics.add.overlap(student, square12, overSquare12);
-            this.physics.add.overlap(student, square13, overSquare13);
-            this.physics.add.overlap(student, square14, overSquare14);
-            this.physics.add.overlap(student, square15, overSquare15);
-            this.physics.add.overlap(student, square16, overSquare16);
-            this.physics.add.overlap(student, square17, overSquare17);
-            this.physics.add.overlap(student, square18, overSquare18);
-            this.physics.add.overlap(student, square19, overSquare19);
-            this.physics.add.overlap(student, square20, overSquare20);
-            this.physics.add.overlap(student, square21, overSquare21);
-            this.physics.add.overlap(student, square22, overSquare22);
-            this.physics.add.overlap(student, square23, overSquare23);
-            this.physics.add.overlap(student, square24, overSquare24);
-            this.physics.add.overlap(student, square25, overSquare25);
-            this.physics.add.overlap(student, square26, overSquare26);
-            this.physics.add.overlap(student, square27, overSquare27);
-            this.physics.add.overlap(student, square28, overSquare28);
-            this.physics.add.overlap(student, square29, overSquare29);
-            this.physics.add.overlap(student, square30, overSquare30);
-            this.physics.add.overlap(student, square31, overSquare31);
-            this.physics.add.overlap(student, square32, overSquare32);
-            
             
         },
         update: function ()
@@ -334,6 +309,10 @@ var gameBoard = new Phaser.Class({
             if(inMinigame == 'MA')
             {
                 this.scene.start('math');
+            }
+            if (inMinigame == 'AR')
+            {
+                
             }
             if(stepsLeft > 0)
             {
@@ -446,7 +425,7 @@ var HistoryGame = new Phaser.Class({
             {
 
                 //gameBoard.scene.bringToTop();
-                this.scene.switch('gameBoard');
+                this.scene.start('gameBoard');
 
             }
         if (cursors.right.isDown)
@@ -754,6 +733,7 @@ var GymGame = new Phaser.Class({
             console.log('blue hit');
             // alert('blue holds ball')
             this.scene.start('gameBoard');
+            inMinigame = 'GB';
         }
     },
 })
@@ -838,18 +818,15 @@ var FrenchGame = new Phaser.Class({
         {
             
             this.scene.start('gameBoard');
+            inMinigame = 'GB';
         }
         
-    }
+        }
     else
     {
         FrCrepe.setVelocityY(100);
     }
-        
-            
-        
-
-    }
+        }
 })
    
 
@@ -1053,10 +1030,7 @@ update: function ()
         }
         else{
             var answer=parseInt(temp)
-            if(right_answer==answer)
-            {
-                this.scene.start('gameBoard');
-            }
+            
             textEntry.text = ""
             temp = ""
             textEntry = this.add.text(10, 50, temp, { font: '32px Courier', fill: '#0080800' });
@@ -1070,10 +1044,14 @@ update: function ()
            
         }
     }
+    if(right_answer == answer)
+            {
+                this.scene.start('gameBoard');
+                inMinigame = 'GB';
+            }
     
     
 }
-
 })
         var config = {
         type: Phaser.AUTO,
@@ -1110,7 +1088,6 @@ update: function ()
                 if(stepsLeft == 0)
                 {
                     artifact = 0;
-                    artifactFound = false;
                     inMinigame = 'WH';
                 }
             }
@@ -1123,6 +1100,10 @@ update: function ()
                 square2Counted = true;
                 lockDir = 1;
                 squareOn++;
+                if(stepsLeft == 0)
+                {
+                    inMinigame = 'FR';
+                }
             }
         }
         function overSquare3 ()
@@ -1133,6 +1114,11 @@ update: function ()
                 square3Counted = true;
                 lockDir = 1;
                 squareOn++;
+                if(stepsLeft == 0)
+                {
+                    inMinigame = 'PE';
+                    dienumber = 0;
+                }
             }
         }
         function overSquare4 ()
@@ -1141,9 +1127,13 @@ update: function ()
             {
                 stepsLeft--;
                 square4Counted = true;
-                
                 lockDir = 1;
                 squareOn++;
+                if(stepsLeft == 0)
+                {
+                    inMinigame = 'SP';
+                    dienumber = 0;
+                }
                 
             }
         }
@@ -1155,6 +1145,11 @@ update: function ()
                 square5Counted = true;
                 lockDir = 1;
                 squareOn++;
+                if(stepsLeft == 0)
+                {
+                    inMinigame = 'MA';
+                    dienumber = 0;
+                }
             }
         }
         function overSquare6 ()
@@ -1165,274 +1160,16 @@ update: function ()
                 square6Counted = true;
                 lockDir = 1;
                 squareOn++;
-            }
-        }
-        function overSquare7 ()
-        {
-            if (square7Counted == false)
-            {
-                stepsLeft--;
-                square7Counted = true;
-                lockDir = 1;
-                squareOn++;
-            }
-        }
-        function overSquare8 ()
-        {
-            if (square8Counted == false)
-            {
-                stepsLeft--;
-                square8Counted = true;
-                lockDir = 1;
-                squareOn++;
-            }
-        }
-        function overSquare9 ()
-        {
-            if (square9Counted == false)
-            {
-                stepsLeft--;
-                square9Counted = true;
-                lockDir = 2;
-                squareOn++;
-            }
-        }
-        function overSquare10 ()
-        {
-            if (square10Counted == false)
-            {
-                stepsLeft--;
-                square10Counted = true;
-                lockDir = 2;
-                squareOn++;
-            }
-        }
-        function overSquare11 ()
-        {
-            if (square11Counted == false)
-            {
-                stepsLeft--;
-                square11Counted = true;
-                lockDir = 2;
-                squareOn++;
-            }
-        }
-        function overSquare12 ()
-        {
-            if (square12Counted == false)
-            {
-                stepsLeft--;
-                square12Counted = true;
-                lockDir = 2;
-                squareOn++;
-            }
-        }
-        function overSquare13 ()
-        {
-            if (square13Counted == false)
-            {
-                stepsLeft--;
-                square13Counted = true;
-                lockDir = 2;
-                squareOn++;
-            }
-        }
-        function overSquare14 ()
-        {
-            if (square14Counted == false)
-            {
-                stepsLeft--;
-                square14Counted = true;
-                lockDir = 2;
-                squareOn++;
-            }
-        }
-        function overSquare15 ()
-        {
-            if (square15Counted == false)
-            {
-                stepsLeft--;
-                square15Counted = true;
-                lockDir = 2;
-                squareOn++;
-            }
-        }
-        function overSquare16 ()
-        {
-            if (square16Counted == false)
-            {
-                stepsLeft--;
-                square16Counted = true;
-                lockDir = 2;
-                squareOn++;
-            }
-        }
-        function overSquare17 ()
-        {
-            if (square17Counted == false)
-            {
-                stepsLeft--;
-                square17Counted = true;
-                lockDir = 3;
-                squareOn++;
-
-            }
-        }
-        function overSquare18 ()
-        {
-            if (square18Counted == false)
-            {
-                stepsLeft--;
-                square18Counted = true;
-                lockDir = 3;
-                squareOn++;
-            }
-        }
-        function overSquare19 ()
-        {
-            if (square19Counted == false)
-            {
-                stepsLeft--;
-                square19Counted = true;
-                lockDir = 3;
-                squareOn++;
-            }
-        }
-        function overSquare20 ()
-        {
-            if (square20Counted == false)
-            {
-                stepsLeft--;
-                square20Counted = true;
-                lockDir = 3;
-            }
-        }
-        function overSquare21 ()
-        {
-            if (square21Counted == false)
-            {
-                stepsLeft--;
-                square21Counted = true;
-                lockDir = 3;
-                squareOn++;
-            }
-        }
-        function overSquare22 ()
-        {
-            if (square22Counted == false)
-            {
-                stepsLeft--;
-                square22Counted = true;
-                lockDir = 3;
-                squareOn++;
-            }
-        }
-        function overSquare23 ()
-        {
-            if (square23Counted == false)
-            {
-                stepsLeft--;
-                square23Counted = true;
-                lockDir = 3;
-                squareOn++;
-            }
-        }
-        function overSquare24 ()
-        {
-            if (square24Counted == false)
-            {
-                stepsLeft--;
-                square24Counted = true;
-                lockDir = 3;
-                squareOn++;
-            }
-        }
-        function overSquare25 ()
-        {
-            if (square25Counted == false)
-            {
-                stepsLeft--;
-                square25Counted = true;
-                lockDir = 4;
-                squareOn++;
-            }
-        }
-        function overSquare26 ()
-        {
-            if (square26Counted == false)
-            {
-                stepsLeft--;
-                square26Counted = true;
-                lockDir = 4;
-                squareOn++;
-            }
-        }
-        function overSquare27 ()
-        {
-            if (square27Counted == false)
-            {
-                stepsLeft--;
-                square27Counted = true;
-                lockDir = 4;
-                squareOn++;
-            }
-        }
-        function overSquare28 ()
-        {
-            if (square28Counted == false)
-            {
-                stepsLeft--;
-                square28Counted = true;
-                lockDir = 4;
-                squareOn++;
-            }
-        }
-        function overSquare29 ()
-        {
-            if (square29Counted == false)
-            {
-                stepsLeft--;
-                square29Counted = true;
-                lockDir = 4;
-                squareOn++;
-            }
-        }
-        function overSquare30 ()
-        {
-            if (square30Counted == false)
-            {
-                stepsLeft--;
-                square30Counted = true;
-                lockDir = 4;
-                squareOn++;
-            }
-            
-        }
-        function overSquare31 ()
-        {
-            if (square31Counted == false)
-            {
-                stepsLeft--;
-                square31Counted = true;
-                lockDir = 4;
-                squareOn++;
-            }
-        }
-        function overSquare32 ()
-        {
-            if (square32Counted == false)
-            {
-                stepsLeft--;
-                square32Counted = true;
-                lockDir = 4;
-                squareOn++;
+                if(stepsLeft == 0)
+                {
+                    inMinigame = 'AR';
+                    dienumber = 0;
+                }
             }
         }
         function artifactFound ()
         {
-            console.log('hello');
             artifact = 1;
-            console.log(artifact);
             inMinigame = 'GB';
             //this.scene.launch('game');    
             //this.scene.start('game');
@@ -1462,6 +1199,7 @@ update: function ()
         function hitEnd(tacoShell, spEnd)
         {
             this.scene.start('gameBoard');
+            inMinigame = 'GB';
         }
         function hitBeef (tacoShell, tacoBeef)
         {
@@ -1548,30 +1286,6 @@ function overTarget5()
             square6Counted = false;
             square7Counted = false;
             square8Counted = false;
-            square9Counted = false;
-            square10Counted = false;
-            square11Counted = false;
-            square12Counted = false;
-            square13Counted = false;
-            square14Counted = false;
-            square15Counted = false;
-            square16Counted = false;
-            square17Counted = false;
-            square18Counted = false;
-            square19Counted = false;
-            square20Counted = false;
-            square21Counted = false;
-            square22Counted = false;
-            square23Counted = false;
-            square24Counted = false;
-            square25Counted = false;
-            square26Counted = false;
-            square27Counted = false;
-            square28Counted = false;
-            square29Counted = false;
-            square30Counted = false;
-            square31Counted = false;
-            square32Counted = false;
             lockDir = 0;
         }
         function printAll()
