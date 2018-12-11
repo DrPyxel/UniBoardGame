@@ -126,6 +126,7 @@
         var holdBallBlue;
         var holdBallRed;
         var spEnd;
+        var playerScore;
 
 var gameBoard = new Phaser.Class({
 
@@ -163,7 +164,7 @@ var gameBoard = new Phaser.Class({
             
             studentX = 750;
             studentY = 50;
-            
+            playerScore = [0, 0, 0, 0];
             this.add.image(400, 400, 'board');
             beesles = this.physics.add.staticGroup();
             squareOn = 1;
@@ -312,24 +313,14 @@ var gameBoard = new Phaser.Class({
             }
             if (inMinigame == 'AR')
             {
-                
+                this.scene.start('art');
             }
             if(stepsLeft > 0)
             {
             
-                if (cursors.right.isDown && lockDir!== 2)
-                {
-                    student.setVelocityX(160);
-                    student.anims.play('right', true);
-                }
-                else if (cursors.left.isDown && lockDir !== 4)
-                {
-                    student.setVelocityX(-160);
-
-                    student.anims.play('left', true);
-                }
                 
-                else if (cursors.up.isDown && lockDir !== 1)
+                
+                if (cursors.up.isDown && lockDir !== 1)
                 {
                     student.setVelocityY(-160);
 
@@ -740,7 +731,7 @@ var GymGame = new Phaser.Class({
 var FrenchGame = new Phaser.Class({
     Extends: Phaser.Scene,
     initialize:
-    function FrenchGame ()
+    function  ()
     {
         Phaser.Scene.call(this, 'french');
     },
@@ -795,7 +786,6 @@ var FrenchGame = new Phaser.Class({
     FrCrepe = this.physics.add.sprite(200, 100, 'crepe');
     FrCrepe.setCollideWorldBounds(true);
     this.physics.add.collider(FrPan, FrCrepe);
-    FrScoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
     this.physics.add.overlap(FrBar, FrTarget1, overTarget1);
     this.physics.add.overlap(FrBar, FrTarget2, overTarget2);
     this.physics.add.overlap(FrBar, FrTarget3, overTarget3);
@@ -806,17 +796,12 @@ var FrenchGame = new Phaser.Class({
     },
     update: function()
     {
-        FrBar.setVelocity(0, 0);
-            
-        FrScoreText.setText('Score: ' + FrScore);
         if (keySpace.isDown)
         {
         //console.log(FrCrepe.velocity.y);
         FrBar.setVelocity(0, 0);
-        FrScoreText.setText('Score: ' + FrScore);
         if(FrScore > 0)
         {
-            
             this.scene.start('gameBoard');
             inMinigame = 'GB';
         }
@@ -828,7 +813,53 @@ var FrenchGame = new Phaser.Class({
     }
         }
 })
-   
+var ArtGame = new Phaser.Class({
+    Extends: Phaser.Scene,
+    initialize:
+    function ArtGame()
+    {
+        Phaser.Scene.call(this, 'art');
+    },
+    preload: function()
+    {
+        this.load.image('brush', 'sprites/ball.png');
+    },
+    create: function()
+    {
+    //var rt = this.add.renderTexture(0, 0, 128, 128).setInteractive().setDepth(1000);
+
+    var hsv = Phaser.Display.Color.HSVColorWheel();
+    var brush = this.physics.add.group();
+
+    this.input.keyboard.on('keydown_SPACE', function () {
+        inMinigame = 'GB';
+    });
+
+    this.input.on('pointerdown', function (pointer) {
+
+        brush.create(pointer.x, pointer.y, 'brush');
+
+    });
+
+    this.input.on('pointermove', function (pointer) {
+
+        if (pointer.isDown)
+        {
+            brush.create(pointer.x, pointer.y, 'brush');
+            brush.create(pointer.x, pointer.y, 'brush');
+        }
+
+    });
+    },
+    update: function()
+    {
+        if(inMinigame == 'GB')
+        {
+            this.scene.start('gameBoard');
+        }
+    }
+
+})
 
 var MathGame = new Phaser.Class({
     Extends: Phaser.Scene,
@@ -1058,6 +1089,7 @@ update: function ()
         width: 800,
         height: 800,
         pixelArt: true,
+        //backgroundColor: '#fff',
         //backgroundColor: '#2d2d8d',
         physics: {
             default: 'arcade',
@@ -1067,7 +1099,7 @@ update: function ()
             }
         },
 
-        scene: [gameBoard, MathGame, GymGame, FrenchGame, SpanishGame, HistoryGame]
+        scene: [ArtGame, gameBoard, MathGame, GymGame, FrenchGame, SpanishGame, HistoryGame]
         };
 
         var game = new Phaser.Game(config);
@@ -1089,6 +1121,7 @@ update: function ()
                 {
                     artifact = 0;
                     inMinigame = 'WH';
+                    dienumber = 0;
                 }
             }
         }
@@ -1103,6 +1136,7 @@ update: function ()
                 if(stepsLeft == 0)
                 {
                     inMinigame = 'FR';
+                    dienumber = 0;
                 }
             }
         }
@@ -1118,6 +1152,7 @@ update: function ()
                 {
                     inMinigame = 'PE';
                     dienumber = 0;
+                    holdBallBlue = false;
                 }
             }
         }
