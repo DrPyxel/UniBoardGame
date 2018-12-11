@@ -203,35 +203,38 @@ var gameBoard = new Phaser.Class({
                 if (pointer.rightButtonDown())
                 {
                     console.log(pointer.x + ', ' + pointer.y);
-                    
+                            inMinigame = 'GB';
                             dienumber = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-                            
-                            stepsLeft = dienumber;
-                            squareOn--;
                             reset();
-                            if (dienumber === 1)
+                            if (dienumber == 1)
                             {
                                 this.add.image(400, 300, 'DieOne');
+                                stepsLeft = 1;
                             }
-                            else if (dienumber === 2)
+                            else if (dienumber == 2)
                             {
                                 this.add.image(400, 300, 'DieTwo');
+                                stepsLeft = 2;
                             }
-                            else if (dienumber === 3)
+                            else if (dienumber == 3)
                             {
                                 this.add.image(400, 300, 'DieThree');
+                                stepsLeft = 3;
                             }
-                            else if (dienumber === 4)
+                            else if (dienumber == 4)
                             {
                                 this.add.image(400, 300, 'DieFour');
+                                stepsLeft = 4;
                             }
-                            else if (dienumber === 5)
+                            else if (dienumber == 5)
                             {
                                 this.add.image(400, 300, 'DieFive');
+                                stepsLeft = 5;
                             }
-                            else if (dienumber === 6)
+                            else if (dienumber == 6)
                             {
                                 this.add.image(400, 300, 'DieSix');
+                                stepsLeft = 6;
                             }
                             this.add.text(400, 200, dienumber).setFontFamily('Trebuchet MS').setFontSize(25).setColor('#008080');
                             console.log(dienumber);
