@@ -4,7 +4,7 @@
         <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/DrPyxel/UniBoardGame/master/sprites/Beesley.png">
     <title>
         Uni: Graduate
-    </title>>
+    </title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.0.0/dist/phaser.min.js"></script>
     <style>
         body {
@@ -42,30 +42,6 @@
         var square6;
         var square7;
         var square8;
-        var square9;
-        var square10;
-        var square11;
-        var square12;
-        var square13;
-        var square14;
-        var square15;
-        var square16;
-        var square17;
-        var square18;
-        var square19;
-        var square20;
-        var square21;
-        var square22;
-        var square23;
-        var square24;
-        var square25;
-        var square26;
-        var square27;
-        var square28;
-        var square29;
-        var square30;
-        var square31;
-        var square32;
         var square1Counted;
         var square2Counted;
         var square3Counted;
@@ -74,35 +50,10 @@
         var square6Counted;
         var square7Counted;
         var square8Counted;
-        var square9Counted;
-        var square10Counted;
-        var square11Counted;
-        var square12Counted;
-        var square13Counted;
-        var square14Counted;
-        var square15Counted;
-        var square16Counted;
-        var square17Counted;
-        var square18Counted;
-        var square19Counted;
-        var square20Counted;
-        var square21Counted;
-        var square22Counted;
-        var square23Counted;
-        var square24Counted;
-        var square25Counted;
-        var square26Counted;
-        var square27Counted;
-        var square28Counted;
-        var square29Counted;
-        var square30Counted;
-        var square31Counted;
-        var square32Counted;
         var studentX;
         var studentY;
         var inMinigame;
         var points;
-        //var squareOn;
         var score = 0;
         var scoreText;
         var timer;
@@ -127,6 +78,9 @@
         var holdBallRed;
         var spEnd;
         var playerScore;
+        var playerOn = 1;
+
+
 
 var gameBoard = new Phaser.Class({
 
@@ -137,11 +91,13 @@ var gameBoard = new Phaser.Class({
             {
                 Phaser.Scene.call(this, 'gameBoard');
             },
-
             preload: function ()
             {
             this.load.image('board', 'sprites/boardNew.png');
             this.load.spritesheet('student', 'sprites/student.png', {frameWidth: 28, frameHeight: 33});
+            this.load.spritesheet('student2', 'sprites/Student2.png', {frameWidth: 400/16, frameHeight: 29});
+            this.load.spritesheet('student3', 'sprites/Student3.png', {frameWidth: 20, frameHeight: 25});
+            this.load.spritesheet('student4', 'sprites/Student4.png', {frameWidth: 28, frameHeight: 28});
             this.load.image('beesley', 'sprites/Beesley.png');
             this.load.image('player', 'sprites/player.png');
             //this.load.image('center', 'sprites/boardCenter.png');
@@ -161,7 +117,10 @@ var gameBoard = new Phaser.Class({
             },
             create: function ()
             {
-            
+            inMinigame = 'GB';
+            holdBallBlue = false;
+            holdBallRed = false;
+            stepsLeft = 0;
             studentX = 750;
             studentY = 50;
             playerScore = [0, 0, 0, 0];
@@ -190,9 +149,66 @@ var gameBoard = new Phaser.Class({
             square4.create(760, 400, 'square-4');
             square5.create(760, 490, 'square-5');
             square6.create(760, 580, 'square-6');
-
-            
+            if(playerOn == 1)
+            {
             student = this.physics.add.sprite(studentX, studentY, 'student');
+            this.anims.create({
+                key: 'move',
+                frames: this.anims.generateFrameNumbers('student', { start: 0, end: 5 }),
+                frameRate: 10,
+                repeat: -1
+            });
+            this.anims.create({
+                key: 'none',
+                frames: [ { key: 'student', frame: 0 } ],
+                frameRate: 10
+            });
+            }
+            else if(playerOn == 2)
+            {
+            student = this.physics.add.sprite(studentX, studentY, 'student2');
+            this.anims.create({
+                key: 'move2',
+                frames: this.anims.generateFrameNumbers('student2', { start: 0, end: 7 }),
+                frameRate: 10,
+                repeat: -1
+            });
+            this.anims.create({
+                key: 'none2',
+                frames: [ { key: 'student2', frame: 3 } ],
+                frameRate: 10
+            });
+            }
+            else if(playerOn == 3)
+            {
+            student = this.physics.add.sprite(studentX, studentY, 'student3');
+            this.anims.create({
+                key: 'move3',
+                frames: this.anims.generateFrameNumbers('student3', { start: 0, end: 7 }),
+                frameRate: 10,
+                repeat: -1
+            });
+            this.anims.create({
+                key: 'none3',
+                frames: [ { key: 'student3', frame: 3 } ],
+                frameRate: 10
+            });
+            }
+            else if(playerOn == 4)
+            {
+            student = this.physics.add.sprite(studentX, studentY, 'student4');
+            this.anims.create({
+                key: 'move4',
+                frames: this.anims.generateFrameNumbers('student4', { start: 0, end: 7 }),
+                frameRate: 10,
+                repeat: -1
+            });
+            this.anims.create({
+                key: 'none4',
+                frames: [ { key: 'student4', frame: 3 } ],
+                frameRate: 10
+            });
+            }
             student.setCollideWorldBounds(true);
 
             this.input.mouse.disableContextMenu();
@@ -202,10 +218,8 @@ var gameBoard = new Phaser.Class({
                 
                 if (pointer.rightButtonDown())
                 {
-                    console.log(pointer.x + ', ' + pointer.y);
                             inMinigame = 'GB';
                             dienumber = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-                            reset();
                             if (dienumber == 1)
                             {
                                 this.add.image(400, 300, 'DieOne');
@@ -243,10 +257,6 @@ var gameBoard = new Phaser.Class({
             
 
             }, this);
-
-            
-
-
             this.add.text(150, 400, 'Right Click here to roll the dice!').setFontFamily('Trebuchet MS').setFontSize(35).setColor('#008080');
             cursors = this.input.keyboard.createCursorKeys();
             
@@ -257,32 +267,9 @@ var gameBoard = new Phaser.Class({
             //playerImg.scaleY = 0.15;
             
 
-            this.anims.create({
-                key: 'move',
-                frames: this.anims.generateFrameNumbers('student', { start: 0, end: 5 }),
-                frameRate: 10,
-                repeat: -1
-            });
-            this.anims.create({
-                key: 'right',
-                frames: this.anims.generateFrameNumbers('student', { start: 6, end: 13 }),
-                frameRate: 10,
-                repeat: -1
-            });
-            this.anims.create({
-                key: 'left',
-                frames: this.anims.generateFrameNumbers('student', { start: 14, end: 22 }),
-                frameRate: 10,
-                repeat: -1
-            });
-            this.anims.create({
-                key: 'none',
-                frames: [ { key: 'student', frame: 0 } ],
-                frameRate: 10
-            });
+            
             
             //this.physics.add.collider(student, beesles);
-            this.physics.add.collider(student, center); 
             
             this.physics.add.overlap(student, square1, overSquare1);
             this.physics.add.overlap(student, square2, overSquare2);
@@ -294,65 +281,85 @@ var gameBoard = new Phaser.Class({
         },
         update: function ()
         {
+            
+            if(playerOn == 5)
+            {
+                playerOn = 1;
+            }
             if(inMinigame == 'WH')
             {
                 this.scene.start('history');
+                stepsLeft = 0;
             }
             if(inMinigame == 'PE')
             {
                 this.scene.start('gym');
+                stepsLeft = 0;
             }
             if(inMinigame == 'FR')
             {
                 this.scene.start('french');
+                stepsLeft = 0;
             }
             if(inMinigame == 'SP')
             {
                 this.scene.start('spanish');
+                stepsLeft = 0;
             }
             if(inMinigame == 'MA')
             {
                 this.scene.start('math');
+                stepsLeft = 0;
             }
             if (inMinigame == 'AR')
             {
                 this.scene.start('art');
+                stepsLeft = 0;
             }
-            if(stepsLeft > 0)
-            {
-            
-                
-                
-                if (cursors.up.isDown && lockDir !== 1)
-                {
-                    student.setVelocityY(-160);
-
-                    student.anims.play('move', true);
-                }
-                
-                
-                else if (cursors.down.isDown && lockDir !== 3)
+                if (cursors.down.isDown)
                 {
                     student.setVelocityY(160);
 
-                    student.anims.play('move', true);
+                    if(playerOn == 1)
+                    {
+                        student.anims.play('move', true);
+                    }
+                    else if(playerOn == 2)
+                    {
+                        student.anims.play('move2', true);
+                    }
+                    else if(playerOn == 3)
+                    {
+                        student.anims.play('move3', true);
+                    }
+                    else if(playerOn == 4)
+                    {
+                        student.anims.play('move4', true);
+                    }
                 }
                 else
                 {
                     student.setVelocityY(0);
                     student.setVelocityX(0);
-                    student.anims.play('none', true);
+                    if(playerOn == 1)
+                    {
+                        student.anims.play('none', true);
+                    }
+                    else if(playerOn == 2)
+                    {
+                        student.anims.play('none2', true);
+                    }
+                    else if(playerOn == 3)
+                    {
+                        student.anims.play('none3', true);
+                    }
+                    else if(playerOn == 4)
+                    {
+                        student.anims.play('none4', true);
+                    }
                 }
-            }
-
-            else
-            {
-                student.setVelocityX(0);
-                student.setVelocityY(0);
-                student.anims.play('none', true);
-                
-                printAll();
-            }
+               
+        
         }
         });
 var HistoryGame = new Phaser.Class({
@@ -417,10 +424,13 @@ var HistoryGame = new Phaser.Class({
     {
         if (artifact == 1)
             {
-
                 //gameBoard.scene.bringToTop();
+                playerScore[playerOn] += 100;
+                console.log('playerScore ' + playerScore);
+                playerOn++;
+                artifact = 0;
                 this.scene.start('gameBoard');
-
+                
             }
         if (cursors.right.isDown)
                 {
@@ -665,13 +675,6 @@ var GymGame = new Phaser.Class({
     },
     update: function()
     {
-        if(inMinigame == 1)
-        {
-            //game.scene.add('gameBoard', gameBoard);
-            
-        }
-
-
         if (DBuMove.isDown)
         {
         DBblue.setVelocityY(-115);
@@ -723,11 +726,12 @@ var GymGame = new Phaser.Class({
         }
         if (holdBallBlue == true)
         {
-            inMinigame = 1;
-            console.log('blue hit');
-            // alert('blue holds ball')
-            this.scene.start('gameBoard');
             inMinigame = 'GB';
+            holdBallBlue = false;
+            console.log('blue hit');
+            this.scene.start('gameBoard');
+            playerScore[playerOn] += 100;
+            playerOn++;
         }
     },
 })
@@ -803,13 +807,13 @@ var FrenchGame = new Phaser.Class({
         {
         //console.log(FrCrepe.velocity.y);
         FrBar.setVelocity(0, 0);
-        if(FrScore > 0)
-        {
-            this.scene.start('gameBoard');
-            inMinigame = 'GB';
+        this.scene.start('gameBoard');
+        playerScore[playerOn] += 100;
+        playerOn++;
+        console.log(playerOn);
         }
         
-        }
+        
     else
     {
         FrCrepe.setVelocityY(100);
@@ -836,6 +840,9 @@ var ArtGame = new Phaser.Class({
 
     this.input.keyboard.on('keydown_SPACE', function () {
         inMinigame = 'GB';
+        playerScore[playerOn] += 100;
+        playerOn++;
+        console.log('playerScore '+ playerScore);
     });
 
     this.input.on('pointerdown', function (pointer) {
@@ -859,6 +866,8 @@ var ArtGame = new Phaser.Class({
         if(inMinigame == 'GB')
         {
             this.scene.start('gameBoard');
+            playerScore[playerOn] += 100;
+            playerOn++;
         }
     }
 
@@ -1080,8 +1089,13 @@ update: function ()
     }
     if(right_answer == answer)
             {
-                this.scene.start('gameBoard');
                 inMinigame = 'GB';
+                dienumber = 0;
+                stepsLeft = 0;
+                this.scene.start('gameBoard');
+                playerScore[playerOn] += 100;
+                playerOn++;
+
             }
     
     
@@ -1102,16 +1116,10 @@ update: function ()
             }
         },
 
-        scene: [ArtGame, gameBoard, MathGame, GymGame, FrenchGame, SpanishGame, HistoryGame]
+        scene: [gameBoard, ArtGame, MathGame, GymGame, FrenchGame, SpanishGame, HistoryGame]
         };
-
         var game = new Phaser.Game(config);
         
-        inMinigame = 'GB';
-
-         
-
-        {
         function overSquare1 ()
         {
             if (square1Counted == false)
@@ -1238,30 +1246,31 @@ update: function ()
         {
             this.scene.start('gameBoard');
             inMinigame = 'GB';
+            playerOn++;
         }
         function hitBeef (tacoShell, tacoBeef)
         {
         tacoBeef.disableBody(true, true);
-        score += 2;
-        scoreText.setText('Score: ' + score);
+        playerScore[playerOn] += 2;
+        scoreText.setText('Score: ' + playerScore[playerOn]);
         }
         function hitCheese (tacoShell, tacoCheese)
         {
         tacoCheese.disableBody(true, true);
-        score += 5;
-        scoreText.setText('Score: ' + score);
+        playerScore[playerOn] += 5;
+        scoreText.setText('Score: ' + playerScore[playerOn]);
         }
         function hitLettuce (tacoShell, tacoLettuce)
         {
         tacoLettuce.disableBody(true, true);
-        score += 7;
-        scoreText.setText('Score: ' + score);
+        playerScore[playerOn] += 7;
+        scoreText.setText('Score: ' + playerScore[playerOn]);
         }
         function hitSauce (tacoShell, tacoSauce)
         {
         tacoSauce.disableBody(true, true);
-        score -= 20;
-        scoreText.setText('Score: ' + score);
+        playerScore[playerOn] -= 20;
+        scoreText.setText('Score: ' + playerScore[playerOn]);
         }
         function FrPointReduce()
 {
@@ -1272,7 +1281,7 @@ function overTarget1()
     
     if (keySpace.isDown)
     {
-    FrScore += 10;
+    playerScore[playerOn] += 100;
     FrBar.disableBody(true, true);
     }
 }
@@ -1281,7 +1290,7 @@ function overTarget2()
     
     if (keySpace.isDown)
     {
-    FrScore += 7;
+        playerScore[playerOn] += 70;
     FrBar.disableBody(true, true);
     }
 }
@@ -1290,7 +1299,7 @@ function overTarget3()
     
     if (keySpace.isDown)
     {
-    FrScore += 3;
+        playerScore[playerOn] += 30;
     FrBar.disableBody(true, true);
     }
 }
@@ -1298,7 +1307,7 @@ function overTarget4()
 {
     if (keySpace.isDown)
     {
-    FrScore += 2;
+        playerScore[playerOn] += 20;
     FrBar.disableBody(true, true);
     }
 }
@@ -1307,12 +1316,12 @@ function overTarget5()
     
     if (keySpace.isDown)
     {
-    FrScore += 1;
+        playerScore[playerOn] += 10;
     FrBar.disableBody(true, true);
     }
 }
 
-    }
+    
     
         function reset()
         {
@@ -1331,5 +1340,6 @@ function overTarget5()
             console.log(squareOn);
         }
         </script>
+        
 </body>
 </html>
