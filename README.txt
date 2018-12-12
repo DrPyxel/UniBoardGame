@@ -30,7 +30,7 @@ The player will find themselves in a dark cave. To win, they must find the artif
 Art: Free Draw (Color: Red)
 The player is presented with a piece of paper. The player can draw on the blackboard for as long as they want. When they are done, hit the space bar, which will teleport you to the gameboard. 
 
-You will be Student 1, Student 2, Student 3, or Student 4. You will move with the arrow keys in the board and will roll the die in an orderly fashion.
+You will be Student 1. You will move with the arrow keys in the board and will roll the die in an orderly fashion.
 
 Have fun!
 
