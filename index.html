@@ -80,7 +80,7 @@
         var playerScore;
         var playerOn = 1;
         var scoreText;
-
+	var dienumber;
 
 
 var gameBoard = new Phaser.Class({
@@ -216,7 +216,7 @@ var gameBoard = new Phaser.Class({
             this.input.mouse.disableContextMenu();
 
             this.input.on('pointerup', function (pointer) {
-            var dienumber = 0
+            dienumber = 0
                 
                 if (pointer.rightButtonDown())
                 {
