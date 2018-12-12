@@ -218,8 +218,10 @@ var gameBoard = new Phaser.Class({
                 
                 if (pointer.rightButtonDown())
                 {
+                    console.log(pointer.x + ', ' + pointer.y);
                             inMinigame = 'GB';
                             dienumber = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+                            reset();
                             if (dienumber == 1)
                             {
                                 this.add.image(400, 300, 'DieOne');
@@ -277,7 +279,99 @@ var gameBoard = new Phaser.Class({
             this.physics.add.overlap(student, square4, overSquare4);
             this.physics.add.overlap(student, square5, overSquare5);
             this.physics.add.overlap(student, square6, overSquare6);
-            
+            function overSquare1 ()
+        {
+            if (square1Counted == false)
+            {
+                stepsLeft--;
+                square1Counted = true;
+                lockDir = 1;
+                squareOn++;
+                if(stepsLeft == 0)
+                {
+                    artifact = 0;
+                    inMinigame = 'WH';
+                    dienumber = 0;
+                }
+            }
+        }
+        function overSquare2 ()
+        {
+            if (square2Counted == false)
+            {
+                stepsLeft--;
+                square2Counted = true;
+                lockDir = 1;
+                squareOn++;
+                if(stepsLeft == 0)
+                {
+                    inMinigame = 'FR';
+                    dienumber = 0;
+                }
+            }
+        }
+        function overSquare3 ()
+        {
+            if (square3Counted == false)
+            {
+                stepsLeft--;
+                square3Counted = true;
+                lockDir = 1;
+                squareOn++;
+                if(stepsLeft == 0)
+                {
+                    inMinigame = 'PE';
+                    dienumber = 0;
+                    holdBallBlue = false;
+                }
+            }
+        }
+        function overSquare4 ()
+        {
+            if (square4Counted == false)
+            {
+                stepsLeft--;
+                square4Counted = true;
+                lockDir = 1;
+                squareOn++;
+                if(stepsLeft == 0)
+                {
+                    inMinigame = 'SP';
+                    dienumber = 0;
+                }
+                
+            }
+        }
+        function overSquare5 ()
+        {
+            if (square5Counted == false)
+            {
+                stepsLeft--;
+                square5Counted = true;
+                lockDir = 1;
+                squareOn++;
+                if(stepsLeft == 0)
+                {
+                    inMinigame = 'MA';
+                    dienumber = 0;
+                }
+            }
+        }
+        function overSquare6 ()
+        {
+            if (square6Counted == false)
+            {
+                stepsLeft--;
+                square6Counted = true;
+                lockDir = 1;
+                squareOn++;
+                if(stepsLeft == 0)
+                {
+                    inMinigame = 'AR';
+                    dienumber = 0;
+                }
+            }
+        }
         },
         update: function ()
         {
@@ -316,7 +410,7 @@ var gameBoard = new Phaser.Class({
                 this.scene.start('art');
                 stepsLeft = 0;
             }
-                if (cursors.down.isDown)
+                if (cursors.down.isDown && lockDir !== 3)
                 {
                     student.setVelocityY(160);
 
@@ -1120,99 +1214,9 @@ update: function ()
         };
         var game = new Phaser.Game(config);
         
-        function overSquare1 ()
-        {
-            if (square1Counted == false)
-            {
-                stepsLeft--;
-                square1Counted = true;
-                lockDir = 1;
-                squareOn++;
-                if(stepsLeft == 0)
-                {
-                    artifact = 0;
-                    inMinigame = 'WH';
-                    dienumber = 0;
-                }
-            }
-        }
-        function overSquare2 ()
-        {
-            if (square2Counted == false)
-            {
-                stepsLeft--;
-                square2Counted = true;
-                lockDir = 1;
-                squareOn++;
-                if(stepsLeft == 0)
-                {
-                    inMinigame = 'FR';
-                    dienumber = 0;
-                }
-            }
-        }
-        function overSquare3 ()
-        {
-            if (square3Counted == false)
-            {
-                stepsLeft--;
-                square3Counted = true;
-                lockDir = 1;
-                squareOn++;
-                if(stepsLeft == 0)
-                {
-                    inMinigame = 'PE';
-                    dienumber = 0;
-                    holdBallBlue = false;
-                }
-            }
-        }
-        function overSquare4 ()
-        {
-            if (square4Counted == false)
-            {
-                stepsLeft--;
-                square4Counted = true;
-                lockDir = 1;
-                squareOn++;
-                if(stepsLeft == 0)
-                {
-                    inMinigame = 'SP';
-                    dienumber = 0;
-                }
-                
-            }
-        }
-        function overSquare5 ()
-        {
-            if (square5Counted == false)
-            {
-                stepsLeft--;
-                square5Counted = true;
-                lockDir = 1;
-                squareOn++;
-                if(stepsLeft == 0)
-                {
-                    inMinigame = 'MA';
-                    dienumber = 0;
-                }
-            }
-        }
-        function overSquare6 ()
-        {
-            if (square6Counted == false)
-            {
-                stepsLeft--;
-                square6Counted = true;
-                lockDir = 1;
-                squareOn++;
-                if(stepsLeft == 0)
-                {
-                    inMinigame = 'AR';
-                    dienumber = 0;
-                }
-            }
-        }
+        
+
+        inMinigame = 'GB';
         function artifactFound ()
         {
             artifact = 1;
